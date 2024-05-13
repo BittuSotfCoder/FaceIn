@@ -1,11 +1,9 @@
 
 import 'package:facein/Page/Home.dart';
-import 'package:facein/widgets/TxtButton.dart';
 import 'package:flutter/material.dart';
 import '../widgets/Rounded_btn.dart';
 import '../widgets/logobtn.dart';
 import 'ForGotPage.dart';
-import 'HomePage.dart';
 import 'SignUpPage.dart';
 
 class LoginPage extends StatefulWidget {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/Rounded_btn.dart';
 import 'LoginPage.dart';
+import 'package:http/http.dart' as http;
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key, required this.title});
 
@@ -126,12 +127,6 @@ class _MyHomePageState extends State<SignUpPage> {
                   SizedBox(
                     child: RoundButton(btnName: 'SignUp',callback: (){
                       print('Addd');
-                    // CollectionReference collref=FirebaseFirestore.instance.collection('Client');
-                    // collref.add({
-                    //   'name': TextName.text,
-                    //   'email': TextEmail.text,
-                    //   'password':TextPasswordShow,
-                    //     });
                       print("add");
                     },textStyle: const TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.white), ),
                   ),
@@ -167,4 +162,23 @@ class _MyHomePageState extends State<SignUpPage> {
 
     );
   }
+ Future<void> InsertUser() async {
+    final url = Uri.parse('http://192.168.1.40/API/APIinsert.php');
+    final response = await http.post(
+      url,
+      body: {
+      },
+      headers: {'Content-Type': 'application/json'},
+    );
+    print(response.statusCode);
+    if (response.statusCode == 201) {
+      // Data insertion successful
+      print('Data inserted successfully');
+    } else {
+      // Error occurred while inserting data
+      print('Failed to insert data. Error: ${response.body}');
+    }
+  }
+
+
 }
