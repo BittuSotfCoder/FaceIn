@@ -1,4 +1,5 @@
 import 'package:facein/TabOnScreen/TabHome.dart';
+import 'package:facein/TabOnScreen/TabNotification.dart';
 import 'package:facein/TabOnScreen/TabOption.dart';
 import 'package:facein/TabOnScreen/TabProfile.dart';
 import 'package:facein/TabOnScreen/TabWatch.dart';
@@ -31,11 +32,11 @@ class _MyHomePageState extends State<Home> {
   @override
   Widget build(BuildContext context) {
 
-    return DefaultTabController(length: 5, child:
+    return DefaultTabController(length: 6, child:
     Scaffold(
       appBar: AppBar(
-        backgroundColor:  Color(0xffebefee),
-        title:  Padding(
+        backgroundColor: const Color(0xffebefee),
+        title:const Padding(
           padding: EdgeInsets.only(top: 8.0, right: 10.0),
           child: Text(
             'FaceIndia',
@@ -45,27 +46,21 @@ class _MyHomePageState extends State<Home> {
                 color: Color.fromRGBO(24, 119, 242, 1)),
           ),
         ),
-        actions: <Widget>[
+        actions:  <Widget>[
           IconButton(
-            icon:  Icon(Icons.search),
+            icon:  const Icon(Icons.search),
             onPressed: () {
               // Add your search functionality here
             },
           ),
           IconButton(
-            icon:  Icon(Icons.notifications),
-            onPressed: () {
-              // Add your notification functionality here
-            },
-          ),
-          IconButton(
-            icon:  Icon(Icons.message),
+            icon:const  Icon(Icons.message),
             onPressed: () {
               // Add your notification functionality here
             },
           ),
         ],
-        bottom: TabBar(tabs: [
+        bottom: const TabBar(tabs: [
         Tab(
           icon: Icon(Icons.home),
 
@@ -80,6 +75,9 @@ class _MyHomePageState extends State<Home> {
         Tab(
           icon: Icon(Icons.person),
         ),
+          Tab(
+            icon: Icon(Icons.notifications),
+          ),
         Tab(
           icon: Icon(Icons.list_outlined),
         ),
@@ -90,6 +88,7 @@ class _MyHomePageState extends State<Home> {
         TabWatch(),
         TabFriend(),
         TabProfile(),
+        TabNotification(),
         TabOption()
       ],),
     ),
