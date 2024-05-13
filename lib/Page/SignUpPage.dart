@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/Rounded_btn.dart';
 import 'LoginPage.dart';
 import 'package:http/http.dart' as http;
+
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key, required this.title});
 
@@ -12,38 +13,38 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<SignUpPage> {
-  var TextName=TextEditingController();
-  var TextEmail=TextEditingController();
-  var TextPasswordShow=TextEditingController();
-  var TextPasswordHide=TextEditingController();
-  var HidePass=true;
+  var TextName = TextEditingController();
+  var TextEmail = TextEditingController();
+  var TextPasswordShow = TextEditingController();
+  var TextPasswordHide = TextEditingController();
+  var HidePass = true;
   bool _obscureText = true;
   final Icon _visibilityIconOn = const Icon(Icons.visibility);
   final Icon _visibilityIconOff = const Icon(Icons.visibility_off);
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      body:  Container(
+      body: Container(
         decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors:[
-                Color(0xffa8edea),
-                Color(0xfffed6e3)
-              ],
-            )
-        ),
-
+          colors: [Color(0xffa8edea), Color(0xfffed6e3)],
+        )),
         child: Center(
           child: SizedBox(
             width: 350,
             child: SingleChildScrollView(
               child: Column(
-
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('SignUp',style: TextStyle(fontWeight: FontWeight.w700,fontSize: 51,fontFamily: 'RobotSlab',color:Color(0xff3d1635)),),
+                  const Text(
+                    'SignUp',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 51,
+                        fontFamily: 'RobotSlab',
+                        color: Color(0xff3d1635)),
+                  ),
                   const SizedBox(height: 20),
                   TextField(
                     controller: TextName,
@@ -68,7 +69,8 @@ class _MyHomePageState extends State<SignUpPage> {
                     decoration: InputDecoration(
                       labelText: 'Email Id',
                       labelStyle: const TextStyle(color: Colors.black),
-                      prefixIcon: const Icon(Icons.email_sharp, color: Colors.black),
+                      prefixIcon:
+                          const Icon(Icons.email_sharp, color: Colors.black),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(21.0),
                       ),
@@ -104,11 +106,12 @@ class _MyHomePageState extends State<SignUpPage> {
                       labelStyle: const TextStyle(color: Colors.black),
                       prefixIcon: const Icon(Icons.lock, color: Colors.black),
                       suffixIcon: IconButton(
-                        icon: _obscureText ? _visibilityIconOn : _visibilityIconOff,
+                        icon: _obscureText
+                            ? _visibilityIconOn
+                            : _visibilityIconOff,
                         onPressed: () {
                           setState(() {
                             _obscureText = !_obscureText;
-
                           });
                         },
                       ),
@@ -117,7 +120,6 @@ class _MyHomePageState extends State<SignUpPage> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Colors.deepPurple),
-
                         borderRadius: BorderRadius.circular(21.0),
                       ),
                     ),
@@ -125,30 +127,46 @@ class _MyHomePageState extends State<SignUpPage> {
                   ),
                   const SizedBox(height: 20),
                   SizedBox(
-                    child: RoundButton(btnName: 'SignUp',callback: (){
-                      print('Addd');
-                      print("add");
-                    },textStyle: const TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.white), ),
+                    child: RoundButton(
+                      btnName: 'SignUp',
+                      callback: () {
+                        // InsertUser();
+                      },
+                      textStyle: const TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
                   ),
                   const SizedBox(height: 30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-
-                      const Text('Don\'t Have An Account',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w300, fontFamily: 'RobotSlab'),),
+                      const Text(
+                        'Don\'t Have An Account',
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w300,
+                            fontFamily: 'RobotSlab'),
+                      ),
                       TextButton(
                         onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const LoginPage(title: 'LoginPages',)));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const LoginPage(
+                                    title: 'LoginPages',
+                                  )));
                         },
-                        child: const  Text('Login' ,
+                        child: const Text(
+                          'Login',
                           style: TextStyle(
                               decoration: TextDecoration.underline,
-                              decorationColor: Colors.black, // Optional: Set underline color
+                              decorationColor:
+                                  Colors.black, // Optional: Set underline color
                               decorationThickness: 1,
-                              fontFamily: 'RobotSlab' ,
+                              fontFamily: 'RobotSlab',
                               fontWeight: FontWeight.w600
-                            // Optional: Set underline thickness
-                          ),
+                              // Optional: Set underline thickness
+                              ),
                         ),
                       ),
                     ],
@@ -159,19 +177,22 @@ class _MyHomePageState extends State<SignUpPage> {
           ),
         ),
       ),
-
     );
   }
- Future<void> InsertUser() async {
-    final url = Uri.parse('http://192.168.1.40/API/APIinsert.php');
+
+  Future<void> InsertUser() async {
+    final url = Uri.parse('http://192.168.1.40/API/db_insert.php?action=create-user');
     final response = await http.post(
       url,
       body: {
+            "faceid": "fawscei2",
+            "name": "bittwu kumar",
+            "email": "biswf@bjdj.com",
+            "password": "snjuihsn",
       },
-      headers: {'Content-Type': 'application/json'},
     );
     print(response.statusCode);
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       // Data insertion successful
       print('Data inserted successfully');
     } else {
@@ -179,6 +200,4 @@ class _MyHomePageState extends State<SignUpPage> {
       print('Failed to insert data. Error: ${response.body}');
     }
   }
-
-
 }
