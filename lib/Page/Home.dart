@@ -4,12 +4,6 @@ import 'package:facein/TabOnScreen/TabProfile.dart';
 import 'package:facein/TabOnScreen/TabWatch.dart';
 import 'package:flutter/material.dart';
 import '../TabOnScreen/TabFriend.dart';
-import '../widgets/FriendSearch.dart';
-import '../widgets/PostPage.dart';
-import '../widgets/Rounded_btn.dart';
-import '../widgets/StoryPage.dart';
-import '../widgets/whatMind.dart';
-import 'LoginPage.dart';
 class Home extends StatefulWidget {
   const Home({super.key, required this.title});
 
