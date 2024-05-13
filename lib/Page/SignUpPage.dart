@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import '../widgets/Rounded_btn.dart';
 import 'LoginPage.dart';
@@ -129,8 +131,10 @@ class _MyHomePageState extends State<SignUpPage> {
                   SizedBox(
                     child: RoundButton(
                       btnName: 'SignUp',
-                      callback: () {
-                        // InsertUser();
+                      callback: ()  {
+
+
+                      
                       },
                       textStyle: const TextStyle(
                           fontSize: 17,
@@ -180,24 +184,4 @@ class _MyHomePageState extends State<SignUpPage> {
     );
   }
 
-  Future<void> InsertUser() async {
-    final url = Uri.parse('http://192.168.1.40/API/db_insert.php?action=create-user');
-    final response = await http.post(
-      url,
-      body: {
-            "faceid": "fawscei2",
-            "name": "bittwu kumar",
-            "email": "biswf@bjdj.com",
-            "password": "snjuihsn",
-      },
-    );
-    print(response.statusCode);
-    if (response.statusCode == 200) {
-      // Data insertion successful
-      print('Data inserted successfully');
-    } else {
-      // Error occurred while inserting data
-      print('Failed to insert data. Error: ${response.body}');
-    }
-  }
 }
