@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import '../widgets/Rounded_btn.dart';
 import 'LoginPage.dart';
 import 'package:http/http.dart' as http;
@@ -131,10 +133,15 @@ class _MyHomePageState extends State<SignUpPage> {
                   SizedBox(
                     child: RoundButton(
                       btnName: 'SignUp',
-                      callback: ()  {
-
-
-                      
+                      callback: () {
+//  var TextName = TextEditingController();
+//   var TextEmail = TextEditingController();
+//   var TextPasswordShow = TextEditingController();
+//   var TextPasswordHide = TextEditingController();
+                        Signup(
+                            TextName.text.toString(),
+                            TextEmail.text.toString(),
+                            TextPasswordHide.text.toString());
                       },
                       textStyle: const TextStyle(
                           fontSize: 17,
@@ -184,4 +191,6 @@ class _MyHomePageState extends State<SignUpPage> {
     );
   }
 
+  // ignore: non_constant_identifier_names
+  void Signup(String name, email, password) async {}
 }
