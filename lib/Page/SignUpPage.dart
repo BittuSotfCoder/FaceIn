@@ -1,10 +1,9 @@
 import 'dart:convert';
-// import 'CreateUserid.dart';
 import 'package:flutter/material.dart';
 import '../widgets/Rounded_btn.dart';
+import 'dart:math';
 import 'LoginPage.dart';
 import 'package:http/http.dart' as http;
-
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key, required this.title});
@@ -31,8 +30,8 @@ class _MyHomePageState extends State<SignUpPage> {
       body: Container(
         decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0xffa8edea), Color(0xfffed6e3)],
-            )),
+          colors: [Color(0xffa8edea), Color(0xfffed6e3)],
+        )),
         child: Center(
           child: SizedBox(
             width: 350,
@@ -73,7 +72,7 @@ class _MyHomePageState extends State<SignUpPage> {
                       labelText: 'Email Id',
                       labelStyle: const TextStyle(color: Colors.black),
                       prefixIcon:
-                      const Icon(Icons.email_sharp, color: Colors.black),
+                          const Icon(Icons.email_sharp, color: Colors.black),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(21.0),
                       ),
@@ -156,20 +155,20 @@ class _MyHomePageState extends State<SignUpPage> {
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const LoginPage(
-                                title: 'LoginPages',
-                              )));
+                                    title: 'LoginPages',
+                                  )));
                         },
                         child: const Text(
                           'Login',
                           style: TextStyle(
                               decoration: TextDecoration.underline,
                               decorationColor:
-                              Colors.black, // Optional: Set underline color
+                                  Colors.black, // Optional: Set underline color
                               decorationThickness: 1,
                               fontFamily: 'RobotSlab',
                               fontWeight: FontWeight.w600
-                            // Optional: Set underline thickness
-                          ),
+                              // Optional: Set underline thickness
+                              ),
                         ),
                       ),
                     ],
@@ -182,20 +181,23 @@ class _MyHomePageState extends State<SignUpPage> {
       ),
     );
   }
+
   Future<void> insertData() async {
-    //  String sd=generateUserId(10);
     const String apiUrl =
         'http://192.168.1.40/API/jsonDataInsert.php?action=create-user';
     final Map<String, dynamic> data = {
       // Your data to be inserted
-     
-      "faceid": "facsseq012",
+
+      "faceid": generateUserId(10),
       "name": TextName.text.toString(),
-      "email":TextEmail.text.toString(),
+      "email": TextEmail.text.toString(),
       "password": TextPasswordHide.text.toString()
     };
-    
-    Map<String,String> headers = {'Content-Type':'application/json','api-key':'ndeweidjwekdiwwednddw'};
+
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'api-key': 'ndeweidjwekdiwwednddw'
+    };
 
     try {
       final http.Response response = await http.post(
@@ -213,6 +215,23 @@ class _MyHomePageState extends State<SignUpPage> {
     } catch (e) {
       // ignore: avoid_print
       print(e);
+    }
+  }
+
+  String generateUserId(int length) {
+    Random random = Random();
+    String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
+    int timestampLength = timestamp.length;
+
+    // Ensure that the generated ID is 10 digits long
+    if (timestampLength >= length) {
+      return timestamp.substring(timestampLength - length);
+    } else {
+      String randomDigits = '';
+      for (int i = 0; i < length - timestampLength; i++) {
+        randomDigits += random.nextInt(10).toString();
+      }
+      return timestamp + randomDigits;
     }
   }
 }
