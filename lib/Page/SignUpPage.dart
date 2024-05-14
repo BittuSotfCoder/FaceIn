@@ -187,7 +187,7 @@ class _MyHomePageState extends State<SignUpPage> {
         'http://192.168.1.40/API/jsonDataInsert.php?action=create-user';
     final Map<String, dynamic> data = {
       // Your data to be inserted
-      "faceid": "faceq012",
+      "faceid": "facsseq012",
       "name": TextName.text.toString(),
       "email":TextEmail.text.toString(),
       "password": TextPasswordHide.text.toString()
