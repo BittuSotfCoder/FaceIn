@@ -132,7 +132,62 @@ class _MyHomePageState extends State<SignUpPage> {
                     child: RoundButton(
                       btnName: 'SignUp',
                       callback: () {
-                        insertData();
+                        print(TextName.text.isEmpty);
+                        if (TextName.text.isEmpty &&
+                            TextEmail.text.isEmpty &&
+                            TextPasswordHide.text.isEmpty &&
+                            TextPasswordShow.text.isEmpty) {
+                          print("all fiel");
+                        } else if (TextName.text.isEmpty &&
+                            TextEmail.text.isEmpty &&
+                            TextPasswordHide.text.isEmpty) {
+                          print("name,emai,hide");
+                        } else if (TextName.text.isEmpty &&
+                            TextEmail.text.isEmpty &&
+                            TextPasswordShow.text.isEmpty) {
+                          print("name,email,show");
+                        } else if (TextName.text.isEmpty &&
+                            TextEmail.text.isEmpty) {
+                          print("name,email");
+                        } else if (TextName.text.isEmpty &&
+                            TextPasswordHide.text.isEmpty &&
+                            TextPasswordShow.text.isEmpty) {
+                          print("name,hide,show");
+                        } else if (TextName.text.isEmpty &&
+                            TextPasswordHide.text.isEmpty) {
+                          print("name,hide");
+                        } else if (TextName.text.isEmpty &&
+                            TextPasswordShow.text.isEmpty) {
+                          print("name,show");
+                        } else if (TextName.text.isEmpty) {
+                          print("name");
+                        } else if (TextEmail.text.isEmpty &&
+                            TextPasswordHide.text.isEmpty &&
+                            TextPasswordShow.text.isEmpty) {
+                          print("email,Hide,show");
+                        } else if (TextEmail.text.isEmpty &&
+                            TextPasswordHide.text.isEmpty) {
+                          print("email,hide");
+                        } else if (TextEmail.text.isEmpty &&
+                            TextPasswordShow.text.isEmpty) {
+                          print("email,show");
+                        } else if (TextEmail.text.isEmpty) {
+                          print("email");
+                        } else if (TextPasswordHide.text.isEmpty &&
+                            TextPasswordShow.text.isEmpty) {
+                          print("Hide,show");
+                        } else if (TextPasswordHide.text.isEmpty) {
+                          print("hide");
+                        } else if (TextPasswordShow.text.isEmpty) {
+                          print("show");
+                        } else {
+                          if (TextPasswordShow.text.toString() ==
+                              TextPasswordHide.text.toString()) {
+                            insertData();
+                          } else {
+                            print("Password Not match");
+                          }
+                        }
                       },
                       textStyle: const TextStyle(
                           fontSize: 17,
