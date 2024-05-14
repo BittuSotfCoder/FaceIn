@@ -1,5 +1,6 @@
+// ignore_for_file: unused_shown_name
+
 import 'package:flutter/material.dart' show Border, BorderRadius, BoxDecoration, BuildContext, Color, Colors, EdgeInsets, ElevatedButton, FontStyle, FontWeight, RoundedRectangleBorder, StatelessWidget, Text, TextButton, TextDecoration, TextStyle, VoidCallback, Widget;
-import 'package:flutter/src/widgets/container.dart';
 
 class TxtButton extends StatelessWidget{
   final String btnName;

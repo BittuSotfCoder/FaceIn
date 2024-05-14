@@ -1,10 +1,9 @@
+// ignore_for_file: unused_shown_name
+
 import 'package:facein/widgets/whatMind.dart';
 import 'package:flutter/material.dart' show AppBar, AssetImage, Axis, Border, BorderRadius, BottomNavigationBar, BottomNavigationBarItem, BottomNavigationBarType, BoxDecoration, BoxFit, BoxShape, BuildContext, Center, CircleAvatar, Color, Colors, Column, Container, CrossAxisAlignment, DecorationImage, EdgeInsets, Expanded, FontWeight, Icon, IconButton, Icons, Image, LinearGradient, ListView, MainAxisAlignment, Material, Padding, Row, Scaffold, SingleChildScrollView, SizedBox, State, StatefulWidget, Text, TextStyle, Widget;
-
-import '../widgets/PostPage.dart';
 import '../widgets/StoryPage.dart';
-import '../widgets/widgetText.dart';
-import 'TextPage.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});

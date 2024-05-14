@@ -1,7 +1,8 @@
+// ignore_for_file: unused_shown_name
+
 import 'package:flutter/material.dart' show BuildContext, CircleAvatar, Color, Colors, EdgeInsets, ElevatedButton, IconButton, Icons, InkWell, Material, StatelessWidget, TableRowInkWell, Text, TextStyle, VoidCallback, Widget;
 import 'package:flutter/widgets.dart';
 
-import 'TxtButton.dart';
 class Postpage extends StatelessWidget{
   final String IdName;
   final String DateOfPost;

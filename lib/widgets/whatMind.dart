@@ -1,3 +1,5 @@
+// ignore_for_file: unused_shown_name
+
 import 'package:facein/widgets/widgetText.dart';
 import 'package:flutter/material.dart' show BuildContext, CircleAvatar, Color, Colors, EdgeInsets, Icons, Material, StatelessWidget, Text, TextStyle, VoidCallback, Widget;
 import 'package:flutter/widgets.dart';

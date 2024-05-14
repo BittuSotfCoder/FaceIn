@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../widgets/FriendReqList.dart';
-import '../widgets/FriendSearch.dart';
 import '../widgets/PostPage.dart';
 import '../widgets/StoryPage.dart';
 import '../widgets/whatMind.dart';

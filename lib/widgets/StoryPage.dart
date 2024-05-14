@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart' show BuildContext, CircleAvatar, Color, Colors, EdgeInsets, Icons, Material, StatelessWidget, Text, TextStyle, VoidCallback, Widget;
+// ignore: unused_shown_name
+import 'package:flutter/material.dart' show BuildContext, CircleAvatar, Color, Colors, EdgeInsets, Material, StatelessWidget, Text, TextStyle, VoidCallback, Widget;
 import 'package:flutter/widgets.dart';
 class StoryPage extends StatelessWidget{
   final String IdName;

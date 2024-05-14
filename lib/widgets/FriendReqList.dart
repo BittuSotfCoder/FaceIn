@@ -1,10 +1,8 @@
-import 'package:facein/widgets/widgetText.dart';
+// ignore: unused_shown_name
 import 'package:flutter/material.dart' show BuildContext, CircleAvatar, Color, Colors, EdgeInsets, ElevatedButton, IconButton, Icons, InkWell, Material, StatelessWidget, Text, TextStyle, VoidCallback, Widget;
 import 'package:flutter/widgets.dart';
-
 import 'ButtonUsable.dart';
-import 'ElveButton.dart';
-import 'Rounded_btn.dart';
+
 class FriendsReqList extends StatelessWidget{
 
   final String IdName;
