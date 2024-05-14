@@ -124,8 +124,22 @@ class _MyHomePageState extends State<LoginPage> {
                     child: RoundButton(
                       btnName: 'LogIn',
                       callback: () {
-                        // login(TextEmail.text.toString(), TextPassword.text.toString());
-                        login('sxs', 'sxs');
+                        if (TextEmail.text.isEmpty &&
+                              TextPassword.text.isEmpty) {
+                            // ignore: avoid_print
+                            print('Email,pass empty');
+                          } else if (TextEmail.text.isEmpty) {
+                            // ignore: avoid_print
+                            print('Email,pass empty');
+                          } else if (TextPassword.text.isEmpty) {
+                            // ignore: avoid_print
+                            print('Email,pass empty');
+                          } else {
+                        
+                        login(TextEmail.text.toString(), TextPassword.text.toString());
+                            
+                          }
+                       
                       },
                       textStyle: const TextStyle(
                           fontSize: 17,
@@ -335,34 +349,39 @@ class _MyHomePageState extends State<LoginPage> {
   }
 
   Future<void> login(String email, String password) async {
-    Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'api-key': 'ndeweidjwekdiwwednddw'
-    };
-    const String apiUrl =
-        'http://192.168.1.40/API/jsonDataInsert.php?action=login-user';
-    final Map<String, dynamic> data = {"email": email, "password": password};
-
-    final http.Response response = await http.post(
-      Uri.parse(apiUrl),
-      headers: headers,
-      body: jsonEncode(data),
-    );
-    // ignore: avoid_print
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> responseData = json.decode(response.body);
+    try {
+      Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'api-key': 'ndeweidjwekdiwwednddw'
+      };
+      const String apiUrl =
+          'http://192.168.1.40/API/jsonDataInsert.php?action=login-user';
+      final Map<String, dynamic> data = {"email": email, "password": password};
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: jsonEncode(data),
+      );
       // ignore: avoid_print
-      if (responseData['error']) {
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
         // ignore: avoid_print
-        print(responseData['message']);
+        if (responseData['error']) {
+          // ignore: avoid_print
+          // print(responseData['message']);
+           Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Home(title: 'Homepage',)));
+        } else {
+          // Login failed
+          print(responseData['message']);
+        }
       } else {
-        // Login failed
-        print(responseData['message']);
+        // Error occurred
+        // ignore: avoid_print
+        print('Failed to login. Error: ${response.statusCode}');
       }
-    } else {
-      // Error occurred
+    } catch (e) {
       // ignore: avoid_print
-      print('Failed to login. Error: ${response.statusCode}');
+      print(e);
     }
   }
 }
