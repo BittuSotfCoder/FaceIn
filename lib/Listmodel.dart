@@ -26,30 +26,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     color: Colors.cyanAccent,
-                    child: Column(
-                      children: [
-                        Text(
-                          'id :${mode[index].srNo}',
-                          maxLines: 1,
-                          style: TextStyle(fontSize: 10),
-                        ),
-                        Text(
-                          'Name :${mode[index].name}',
-                          maxLines: 1,
-                          style: TextStyle(fontSize: 10),
-                        ),
-                        Text(
-                          'Email :${mode[index]..email}',
-                          maxLines: 1,
-                          style: TextStyle(fontSize: 10),
-                        ),
-                        Text(
-                          'Price \$ :${mode[index].password}',
-                          maxLines: 1,
-                          style: TextStyle(fontSize: 10),
-                        )
-                      ],
-                    ),
+                    child: Column(children: [
+                      Text(
+                        'id :${mode[index].email}',
+                        maxLines: 1,
+                        style: TextStyle(fontSize: 10),
+                      ),
+                    ]),
                   ),
                 );
               });
@@ -63,25 +46,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<List<ModelUsers>> GetData() async {
-    Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'api-key': 'ndeweidjwekdiwwednddw'
-    };
-    var response = await http.get(
-        Uri.parse(
-            'http://192.168.1.40/API/jsonDataInsert.php?action=get-users'),
-        headers: headers);
-
-    final Map<String, dynamic> responseData = json.decode(response.body);
-    var data = responseData['data'];
+     Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'api-key': 'ndeweidjwekdiwwednddw'
+      };
+    var response =
+        await http.get(Uri.parse('http://192.168.1.40/API/jsonDataInsert.php?action=get-users'),headers: headers);
+    var data = jsonDecode(response.body.toString());
     // ignore: avoid_print
     print(data);
     if (response.statusCode == 200) {
-      // for (Map<String, dynamic> index in responseData) {
-      //   // ignore: avoid_print
-      //   print(index);
-      //   mode.add(ModelUsers.fromJson(index));
-      // }
+      for (Map<String, dynamic> index in data) {
+        mode.add(ModelUsers.fromJson(index));
+      }
       return mode;
     } else {
       return mode;
