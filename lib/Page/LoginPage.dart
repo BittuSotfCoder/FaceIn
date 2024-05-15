@@ -371,8 +371,8 @@ class _MyHomePageState extends State<LoginPage> {
         if (responseData['error']) {
           // ignore: avoid_print
           // print(responseData['message']);
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => Home(
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => const Home(
                     title: 'Homepage',
                   )));
         } else {
