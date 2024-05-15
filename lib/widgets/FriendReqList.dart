@@ -81,11 +81,11 @@ class FriendsReqList extends StatelessWidget{
                                             padding: EdgeInsets.only(top: 2.0),
                                             child: Row(
                                               children: [
-                                                ButtonUsable(btnName: '    Confirm     '  ,btnColor:Color.fromRGBO(24, 119, 242, 1),txtColor: Colors.white,),
+                                                ButtonUsable(btnName: '   Confirm   '   ,btnColor:Color.fromRGBO(24, 119, 242, 1),txtColor: Colors.white,),
                                                 SizedBox(
                                                   width: 10,
                                                 ),
-                                                ButtonUsable(btnName: '      Delete      ',btnColor: Colors.white70),
+                                                ButtonUsable(btnName: '   Delete   ',btnColor: Colors.white70),
                                               ],
                                             )
                                         )
