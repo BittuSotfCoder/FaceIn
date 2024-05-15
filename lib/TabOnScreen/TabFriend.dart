@@ -12,8 +12,8 @@ class TabFriend extends StatelessWidget{
     ,'lib/assets/images/gogle.png','lib/assets/images/sc.jpg','lib/assets/images/th.jpeg',
     'lib/assets/images/th1.jpeg','lib/assets/images/th2.jpeg','lib/assets/images/bittu.jpg','lib/assets/images/sc.jpg','lib/assets/images/th.jpeg',
     'lib/assets/images/th1.jpeg','lib/assets/images/bittuScotter.jpg','lib/assets/images/th3.jpeg','lib/assets/images/th5.jpeg'];
-  var IconImg=['lib/assets/images/bittu.jpg','lib/assets/images/bittuScotter.jpg'
-    ,'lib/assets/images/gogle.png','lib/assets/images/sc.jpg','lib/assets/images/th.jpeg',
+  var IconImg=['lib/assets/images/bittu.jpg','lib/assets/images/bittuScotter.jpg',
+  'lib/assets/images/gogle.png','lib/assets/images/sc.jpg','lib/assets/images/th.jpeg',
     'lib/assets/images/th1.jpeg','lib/assets/images/th2.jpeg','lib/assets/images/bittu.jpg','lib/assets/images/bittuScotter.jpg','lib/assets/images/bittuScotter.jpg','lib/assets/images/th3.jpeg','lib/assets/images/th5.jpeg','lib/assets/images/asus.jpg',];
 
 
@@ -41,13 +41,7 @@ class TabFriend extends StatelessWidget{
                 }, itemCount: arrName.length,
               ),
             )
-              //
-
-
-
-
             ],
-
           ),
         ),
 
