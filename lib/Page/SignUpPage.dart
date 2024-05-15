@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:facein/ClassesLibrary/Res.dart';
 import 'package:flutter/material.dart';
 import '../widgets/Rounded_btn.dart';
 import 'dart:math';
@@ -238,8 +239,6 @@ class _MyHomePageState extends State<SignUpPage> {
   }
 
   Future<void> insertData() async {
-    const String apiUrl =
-        'http://192.168.1.40/API/jsonDataInsert.php?action=create-user';
     final Map<String, dynamic> data = {
       // Your data to be inserted
 
@@ -256,7 +255,7 @@ class _MyHomePageState extends State<SignUpPage> {
 
     try {
       final http.Response response = await http.post(
-        Uri.parse(apiUrl),
+        Uri.parse(Res().getString('create-user')),
         headers: headers,
         body: jsonEncode(data),
       );

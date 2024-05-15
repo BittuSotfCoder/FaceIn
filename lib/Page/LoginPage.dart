@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:facein/ClassesLibrary/Res.dart';
+import 'package:facein/Listmodel.dart';
 import 'package:facein/Page/Home.dart';
 import 'package:flutter/material.dart';
 import '../widgets/Rounded_btn.dart';
@@ -125,21 +127,19 @@ class _MyHomePageState extends State<LoginPage> {
                       btnName: 'LogIn',
                       callback: () {
                         if (TextEmail.text.isEmpty &&
-                              TextPassword.text.isEmpty) {
-                            // ignore: avoid_print
-                            print('Email,pass empty');
-                          } else if (TextEmail.text.isEmpty) {
-                            // ignore: avoid_print
-                            print('Email,pass empty');
-                          } else if (TextPassword.text.isEmpty) {
-                            // ignore: avoid_print
-                            print('Email,pass empty');
-                          } else {
-                        
-                        login(TextEmail.text.toString(), TextPassword.text.toString());
-                            
-                          }
-                       
+                            TextPassword.text.isEmpty) {
+                          // ignore: avoid_print
+                          print('Email,pass empty');
+                        } else if (TextEmail.text.isEmpty) {
+                          // ignore: avoid_print
+                          print('Email empty');
+                        } else if (TextPassword.text.isEmpty) {
+                          // ignore: avoid_print
+                          print('pass empty');
+                        } else {
+                          login(TextEmail.text.toString(),
+                              TextPassword.text.toString());
+                        }
                       },
                       textStyle: const TextStyle(
                           fontSize: 17,
@@ -207,7 +207,11 @@ class _MyHomePageState extends State<LoginPage> {
                       children: [
                         logobtn(
                           btnName: 'Facebook',
-                          callback: () {},
+                          callback: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => HomeScreen(
+                  )));
+                          },
                           bgColor: const Color.fromRGBO(24, 119, 242, 1),
                           icon: const Icon(
                             Icons.facebook,
@@ -354,11 +358,9 @@ class _MyHomePageState extends State<LoginPage> {
         'Content-Type': 'application/json',
         'api-key': 'ndeweidjwekdiwwednddw'
       };
-      const String apiUrl =
-          'http://192.168.1.40/API/jsonDataInsert.php?action=login-user';
       final Map<String, dynamic> data = {"email": email, "password": password};
       final http.Response response = await http.post(
-        Uri.parse(apiUrl),
+        Uri.parse(Res().getString('login-user')),
         headers: headers,
         body: jsonEncode(data),
       );
@@ -369,7 +371,10 @@ class _MyHomePageState extends State<LoginPage> {
         if (responseData['error']) {
           // ignore: avoid_print
           // print(responseData['message']);
-           Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Home(title: 'Homepage',)));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => Home(
+                    title: 'Homepage',
+                  )));
         } else {
           // Login failed
           print(responseData['message']);
