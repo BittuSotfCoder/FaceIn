@@ -138,60 +138,78 @@ class _MyHomePageState extends State<SignUpPage> {
                             TextEmail.text.isEmpty &&
                             TextPasswordHide.text.isEmpty &&
                             TextPasswordShow.text.isEmpty) {
-                CustomToast.showToast(message:'Required \'Name,email,password,Re-Enter password\'');
+                          CustomToast.showToast(
+                              message:
+                                  'Required \'Name,email,password,Re-Enter password\'');
                         } else if (TextName.text.isEmpty &&
                             TextEmail.text.isEmpty &&
                             TextPasswordHide.text.isEmpty) {
-                CustomToast.showToast(message:'Required \'Name,email,Re-Enter password\'');
+                          CustomToast.showToast(
+                              message:
+                                  'Required \'Name,email,Re-Enter password\'');
                         } else if (TextName.text.isEmpty &&
                             TextEmail.text.isEmpty &&
                             TextPasswordShow.text.isEmpty) {
-                          CustomToast.showToast(message:'Required \'Name,email,password\'');
+                          CustomToast.showToast(
+                              message: 'Required \'Name,email,password\'');
                         } else if (TextName.text.isEmpty &&
                             TextEmail.text.isEmpty) {
-                          CustomToast.showToast(message:'Required \'Name,email\'');
+                          CustomToast.showToast(
+                              message: 'Required \'Name,email\'');
                         } else if (TextName.text.isEmpty &&
                             TextPasswordHide.text.isEmpty &&
                             TextPasswordShow.text.isEmpty) {
                           print("name,hide,show");
-                          CustomToast.showToast(message:'Required \'Name,password,Re-Enter password\'');
+                          CustomToast.showToast(
+                              message:
+                                  'Required \'Name,password,Re-Enter password\'');
                         } else if (TextName.text.isEmpty &&
                             TextPasswordHide.text.isEmpty) {
                           print("name,hide");
-                          CustomToast.showToast(message:'Required \'Name,Re-Enter password\'');
+                          CustomToast.showToast(
+                              message: 'Required \'Name,Re-Enter password\'');
                         } else if (TextName.text.isEmpty &&
                             TextPasswordShow.text.isEmpty) {
-                          CustomToast.showToast(message:'Required \'Name,password\'');
+                          CustomToast.showToast(
+                              message: 'Required \'Name,password\'');
                         } else if (TextName.text.isEmpty) {
-                          CustomToast.showToast(message:'Required \'Name\'');
+                          CustomToast.showToast(message: 'Required \'Name\'');
                         } else if (TextEmail.text.isEmpty &&
                             TextPasswordHide.text.isEmpty &&
                             TextPasswordShow.text.isEmpty) {
-                          CustomToast.showToast(message:'Required \'email,password,Re-Enter password\'');
+                          CustomToast.showToast(
+                              message:
+                                  'Required \'email,password,Re-Enter password\'');
                         } else if (TextEmail.text.isEmpty &&
                             TextPasswordHide.text.isEmpty) {
-                          CustomToast.showToast(message:'Required \'email,Re-Enter password\'');
+                          CustomToast.showToast(
+                              message: 'Required \'email,Re-Enter password\'');
                         } else if (TextEmail.text.isEmpty &&
                             TextPasswordShow.text.isEmpty) {
-                              CustomToast.showToast(message:'Required \'email,password\'');
+                          CustomToast.showToast(
+                              message: 'Required \'email,password\'');
                         } else if (TextEmail.text.isEmpty) {
-                        
-                              CustomToast.showToast(message:'Required \'email\'');
+                          CustomToast.showToast(message: 'Required \'email\'');
                         } else if (TextPasswordHide.text.isEmpty &&
                             TextPasswordShow.text.isEmpty) {
-                         ;
-                          CustomToast.showToast(message:'Required \'password,Re-Enter password\'');
+                          ;
+                          CustomToast.showToast(
+                              message:
+                                  'Required \'password,Re-Enter password\'');
                         } else if (TextPasswordHide.text.isEmpty) {
-                          CustomToast.showToast(message:'Required \'Re-Enter password\'');
-                       
+                          CustomToast.showToast(
+                              message: 'Required \'Re-Enter password\'');
                         } else if (TextPasswordShow.text.isEmpty) {
-                       CustomToast.showToast(message:'Required \'password\'');   print("show");
+                          CustomToast.showToast(
+                              message: 'Required \'password\'');
+                          print("show");
                         } else {
                           if (TextPasswordShow.text.toString() ==
                               TextPasswordHide.text.toString()) {
                             insertData();
                           } else {
-                            CustomToast.showToast(message:'Password Not Match');
+                            CustomToast.showToast(
+                                message: 'Password Not Match');
                           }
                         }
                       },
@@ -259,21 +277,26 @@ class _MyHomePageState extends State<SignUpPage> {
     };
 
     try {
-     var response = await http.post(
+      var response = await http.post(
         Uri.parse(Res().getString('create-user')),
         headers: headers,
         body: jsonEncode(data),
       );
       final Map<String, dynamic> responseData = json.decode(response.body);
       if (response.statusCode == 200) {
-        CustomToast.showToast(message:responseData['message']);
+        CustomToast.showToast(message: responseData['message']);
+        TextName.clear();
+        TextEmail.clear();
+        TextPasswordHide.clear();
+        TextPasswordShow.clear();
       } else {
-        CustomToast.showToast(message:responseData['message']+"  "+response.statusCode);
+        CustomToast.showToast(
+            message: responseData['message'] + "  " + response.statusCode);
         // ignore: avoid_print
         // print('Failed to insert data. Error: ${response.statusCode}');
       }
     } catch (e) {
-      CustomToast.showToast(message:e.toString());
+      CustomToast.showToast(message: e.toString());
     }
   }
 

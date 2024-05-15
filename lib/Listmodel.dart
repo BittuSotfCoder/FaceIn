@@ -32,7 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: [Text(
+                        'signuptime: ${mode[index].signuptime}',
+                        maxLines: 1,
+                        style: TextStyle(fontSize: 20),
+                      ),
                       Text(
                         'Name: ${mode[index].name}',
                         maxLines: 1,
@@ -53,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         maxLines: 1,
                         style: TextStyle(fontSize: 20),
                       ),
+                       
                     ]),
                   ),
                 );
