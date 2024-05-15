@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:facein/ClassesLibrary/Res.dart';
 import 'package:facein/Listmodel.dart';
 import 'package:facein/Page/Home.dart';
+import 'package:facein/widgets/CustomToast.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../widgets/Rounded_btn.dart';
 import '../widgets/logobtn.dart';
 import 'ForGotPage.dart';
@@ -128,14 +130,11 @@ class _MyHomePageState extends State<LoginPage> {
                       callback: () {
                         if (TextEmail.text.isEmpty &&
                             TextPassword.text.isEmpty) {
-                          // ignore: avoid_print
-                          print('Email,pass empty');
+                          CustomToast.showToast(message: 'Email,pass empty');
                         } else if (TextEmail.text.isEmpty) {
-                          // ignore: avoid_print
-                          print('Email empty');
+                          CustomToast.showToast(message:'Email empty');
                         } else if (TextPassword.text.isEmpty) {
-                          // ignore: avoid_print
-                          print('pass empty');
+                          CustomToast.showToast(message: 'pass empty');
                         } else {
                           login(TextEmail.text.toString(),
                               TextPassword.text.toString());
@@ -209,8 +208,9 @@ class _MyHomePageState extends State<LoginPage> {
                           btnName: 'Facebook',
                           callback: () {
                             Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => HomeScreen(
-                  )));
+                                builder: (context) => HomeScreen()));
+                            CustomToast.showToast(message: "Details Found");
+                            
                           },
                           bgColor: const Color.fromRGBO(24, 119, 242, 1),
                           icon: const Icon(
@@ -376,17 +376,13 @@ class _MyHomePageState extends State<LoginPage> {
                     title: 'Homepage',
                   )));
         } else {
-          // Login failed
-          print(responseData['message']);
+          CustomToast.showToast(message:responseData['message']);
         }
       } else {
-        // Error occurred
-        // ignore: avoid_print
-        print('Failed to login. Error: ${response.statusCode}');
+        CustomToast.showToast(message: 'Failed to login. Error: ${response.statusCode}');
       }
     } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      CustomToast.showToast(message: e.toString());
     }
   }
 }

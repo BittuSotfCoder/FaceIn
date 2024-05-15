@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:facein/ClassesLibrary/Res.dart';
+import 'package:facein/widgets/CustomToast.dart';
 import 'package:flutter/material.dart';
 import '../widgets/Rounded_btn.dart';
 import 'dart:math';
@@ -133,60 +134,64 @@ class _MyHomePageState extends State<SignUpPage> {
                     child: RoundButton(
                       btnName: 'SignUp',
                       callback: () {
-                        print(TextName.text.isEmpty);
                         if (TextName.text.isEmpty &&
                             TextEmail.text.isEmpty &&
                             TextPasswordHide.text.isEmpty &&
                             TextPasswordShow.text.isEmpty) {
-                          print("all fiel");
+                CustomToast.showToast(message:'Required \'Name,email,password,Re-Enter password\'');
                         } else if (TextName.text.isEmpty &&
                             TextEmail.text.isEmpty &&
                             TextPasswordHide.text.isEmpty) {
-                          print("name,emai,hide");
+                CustomToast.showToast(message:'Required \'Name,email,Re-Enter password\'');
                         } else if (TextName.text.isEmpty &&
                             TextEmail.text.isEmpty &&
                             TextPasswordShow.text.isEmpty) {
-                          print("name,email,show");
+                          CustomToast.showToast(message:'Required \'Name,email,password\'');
                         } else if (TextName.text.isEmpty &&
                             TextEmail.text.isEmpty) {
-                          print("name,email");
+                          CustomToast.showToast(message:'Required \'Name,email\'');
                         } else if (TextName.text.isEmpty &&
                             TextPasswordHide.text.isEmpty &&
                             TextPasswordShow.text.isEmpty) {
                           print("name,hide,show");
+                          CustomToast.showToast(message:'Required \'Name,password,Re-Enter password\'');
                         } else if (TextName.text.isEmpty &&
                             TextPasswordHide.text.isEmpty) {
                           print("name,hide");
+                          CustomToast.showToast(message:'Required \'Name,Re-Enter password\'');
                         } else if (TextName.text.isEmpty &&
                             TextPasswordShow.text.isEmpty) {
-                          print("name,show");
+                          CustomToast.showToast(message:'Required \'Name,password\'');
                         } else if (TextName.text.isEmpty) {
-                          print("name");
+                          CustomToast.showToast(message:'Required \'Name\'');
                         } else if (TextEmail.text.isEmpty &&
                             TextPasswordHide.text.isEmpty &&
                             TextPasswordShow.text.isEmpty) {
-                          print("email,Hide,show");
+                          CustomToast.showToast(message:'Required \'email,password,Re-Enter password\'');
                         } else if (TextEmail.text.isEmpty &&
                             TextPasswordHide.text.isEmpty) {
-                          print("email,hide");
+                          CustomToast.showToast(message:'Required \'email,Re-Enter password\'');
                         } else if (TextEmail.text.isEmpty &&
                             TextPasswordShow.text.isEmpty) {
-                          print("email,show");
+                              CustomToast.showToast(message:'Required \'email,password\'');
                         } else if (TextEmail.text.isEmpty) {
-                          print("email");
+                        
+                              CustomToast.showToast(message:'Required \'email\'');
                         } else if (TextPasswordHide.text.isEmpty &&
                             TextPasswordShow.text.isEmpty) {
-                          print("Hide,show");
+                         ;
+                          CustomToast.showToast(message:'Required \'password,Re-Enter password\'');
                         } else if (TextPasswordHide.text.isEmpty) {
-                          print("hide");
+                          CustomToast.showToast(message:'Required \'Re-Enter password\'');
+                       
                         } else if (TextPasswordShow.text.isEmpty) {
-                          print("show");
+                       CustomToast.showToast(message:'Required \'password\'');   print("show");
                         } else {
                           if (TextPasswordShow.text.toString() ==
                               TextPasswordHide.text.toString()) {
                             insertData();
                           } else {
-                            print("Password Not match");
+                            CustomToast.showToast(message:'Password Not Match');
                           }
                         }
                       },
@@ -254,21 +259,21 @@ class _MyHomePageState extends State<SignUpPage> {
     };
 
     try {
-      final http.Response response = await http.post(
+     var response = await http.post(
         Uri.parse(Res().getString('create-user')),
         headers: headers,
         body: jsonEncode(data),
       );
+      final Map<String, dynamic> responseData = json.decode(response.body);
       if (response.statusCode == 200) {
-        // ignore: avoid_print
-        print('Data inserted successfully');
+        CustomToast.showToast(message:responseData['message']);
       } else {
+        CustomToast.showToast(message:responseData['message']+"  "+response.statusCode);
         // ignore: avoid_print
-        print('Failed to insert data. Error: ${response.statusCode}');
+        // print('Failed to insert data. Error: ${response.statusCode}');
       }
     } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      CustomToast.showToast(message:e.toString());
     }
   }
 
