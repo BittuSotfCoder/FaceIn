@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:facein/ClassesLibrary/Res.dart';
+import 'package:facein/Page/Home.dart';
 import 'package:facein/widgets/CustomToast.dart';
 import 'package:flutter/material.dart';
 import '../widgets/Rounded_btn.dart';
@@ -232,7 +233,7 @@ class _MyHomePageState extends State<SignUpPage> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(
                               builder: (context) => const LoginPage(
                                     title: 'LoginPages',
                                   )));
@@ -285,10 +286,16 @@ class _MyHomePageState extends State<SignUpPage> {
       final Map<String, dynamic> responseData = json.decode(response.body);
       if (response.statusCode == 200) {
         CustomToast.showToast(message: responseData['message']);
+        if(responseData['status']){
+           Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => const Home(
+                    title: 'Homepage',
+                  )));
         TextName.clear();
         TextEmail.clear();
         TextPasswordHide.clear();
         TextPasswordShow.clear();
+        }
       } else {
         CustomToast.showToast(
             message: responseData['message'] + "  " + response.statusCode);
