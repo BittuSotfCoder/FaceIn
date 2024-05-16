@@ -7,6 +7,7 @@ import 'package:facein/widgets/CustomToast.dart';
 import 'package:flutter/material.dart';
 import '../widgets/Rounded_btn.dart';
 import '../widgets/logobtn.dart';
+import 'package:facein/Model/ModelUsers.dart';
 import 'ForGotPage.dart';
 import 'SignUpPage.dart';
 import 'package:http/http.dart' as http;
@@ -21,6 +22,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<LoginPage> {
+  List<ModelUsers> mode = [];
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
   var TextEmail = TextEditingController();
@@ -304,7 +306,8 @@ class _MyHomePageState extends State<LoginPage> {
                                                   text: 'g',
                                                   style: TextStyle(
                                                       fontSize: 17,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       color: Colors
                                                           .blue) // Color of 'g'
                                                   ),
@@ -381,25 +384,27 @@ class _MyHomePageState extends State<LoginPage> {
     );
   }
 
-void faceBookFunc(){
- 
-  Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => HomeScreen()));
-  CustomToast.showToast(message: "Details Found");
-                            
-}
-void googelFunc(){
+  void faceBookFunc() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+    CustomToast.showToast(message: "Details Found");
+  }
+
+  void googelFunc() {
     CustomToast.showToast(message: 'Gest Login');
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => const Home(
-                    title: 'Homepage',
-                  )));
-}
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => const Home(
+              title: 'Homepage',
+            )));
+  }
+
 // ignore: non_constant_identifier_names
-void LogiFunc(){
+  void LogiFunc() {
     if (_globalKey.currentState!.validate()) {
-       login(TextEmail.text.toString(), TextPassword.text.toString());}                     
-}
+      login(TextEmail.text.toString(), TextPassword.text.toString());
+    }
+  }
+
   Future<void> login(String email, String password) async {
     try {
       Map<String, String> headers = {
@@ -412,22 +417,26 @@ void LogiFunc(){
         headers: headers,
         body: jsonEncode(data),
       );
-        final Map<String, dynamic> responseData = json.decode(response.body);
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      for (Map<String, dynamic> index in responseData['data']) {
+        mode.add(ModelUsers.fromJson(index));
+      }
+
       if (response.statusCode == 200) {
-        if (responseData['error']) {
-          CustomToast.showToast(message: responseData['message']);
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => const Home(
-                    title: 'Homepage',
-                  )));
+        if (password == mode[0].password) {
+          if (password == mode[0].password && email == mode[0].email) {
+            CustomToast.showToast(message: responseData['message']);
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => Home(title: 'Home')));
+          }
         } else {
-        CustomToast.showToast(message: 'Email or Password incoreect');
+          CustomToast.showToast(message: 'Wrong Password');
         }
       } else {
-          CustomToast.showToast(message: responseData['message']);
+        CustomToast.showToast(message: responseData['message']);
       }
     } catch (e) {
-      CustomToast.showToast(message: e.toString());
+      CustomToast.showToast(message: "EMail not Register");
     }
   }
 }
