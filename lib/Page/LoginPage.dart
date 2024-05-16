@@ -5,7 +5,6 @@ import 'package:facein/Listmodel.dart';
 import 'package:facein/Page/Home.dart';
 import 'package:facein/widgets/CustomToast.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import '../widgets/Rounded_btn.dart';
 import '../widgets/logobtn.dart';
 import 'ForGotPage.dart';
@@ -169,23 +168,7 @@ class _MyHomePageState extends State<LoginPage> {
                     SizedBox(
                       child: RoundButton(
                         btnName: 'LogIn',
-                        callback: () {
-                          // if (TextEmail.text.isEmpty &&
-                          //     TextPassword.text.isEmpty) {
-                          //   CustomToast.showToast(message: 'Email,pass empty');
-                          // } else if (TextEmail.text.isEmpty) {
-                          //   CustomToast.showToast(message:'Email empty');
-                          // } else if (TextPassword.text.isEmpty) {
-                          //   CustomToast.showToast(message: 'pass empty');
-                          // } else {
-
-                          // }
-
-                          if (_globalKey.currentState!.validate()) {
-                            login(TextEmail.text.toString(),
-                                TextPassword.text.toString());
-                          }
-                        },
+                        callback: LogiFunc,
                         textStyle: const TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.bold,
@@ -252,11 +235,7 @@ class _MyHomePageState extends State<LoginPage> {
                         children: [
                           logobtn(
                             btnName: 'Facebook',
-                            callback: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => HomeScreen()));
-                              CustomToast.showToast(message: "Details Found");
-                            },
+                            callback: faceBookFunc,
                             bgColor: const Color.fromRGBO(24, 119, 242, 1),
                             icon: const Icon(
                               Icons.facebook,
@@ -269,85 +248,88 @@ class _MyHomePageState extends State<LoginPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: 160,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: const Color(0xffebefee),
-                                borderRadius: BorderRadius.circular(15.0),
-                                border: Border.all(
-                                  width: 1.0,
-                                  color: Colors
-                                      .black, // Adjust the color of the border as needed
+                            child: InkWell(
+                              onTap: googelFunc,
+                              child: Container(
+                                width: 160,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xffebefee),
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  border: Border.all(
+                                    width: 1.0,
+                                    color: Colors
+                                        .black, // Adjust the color of the border as needed
+                                  ),
+                                  // Adjust the value to change the circle size
                                 ),
-                                // Adjust the value to change the circle size
-                              ),
-                              child: Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'lib/assets/images/gogle.png',
-                                      width: 20,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: RichText(
-                                        text: const TextSpan(
-                                          children: [
-                                            TextSpan(
-                                              text: 'G',
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors
-                                                      .blue), // Color of 'G'
-                                            ),
-                                            TextSpan(
-                                              text: 'o',
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors
-                                                      .red), // Color of 'o'
-                                            ),
-                                            TextSpan(
-                                              text: 'o',
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors
-                                                      .yellow), // Color of 'o'
-                                            ),
-                                            TextSpan(
-                                                text: 'g',
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'lib/assets/images/gogle.png',
+                                        width: 20,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: RichText(
+                                          text: const TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text: 'G',
                                                 style: TextStyle(
                                                     fontSize: 17,
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors
-                                                        .blue) // Color of 'g'
-                                                ),
-                                            TextSpan(
-                                              text: 'l',
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors
-                                                      .green), // Color of 'l'
-                                            ),
-                                            TextSpan(
-                                              text: 'e',
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors
-                                                      .red), // Color of 'e'
-                                            ),
-                                          ],
+                                                        .blue), // Color of 'G'
+                                              ),
+                                              TextSpan(
+                                                text: 'o',
+                                                style: TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors
+                                                        .red), // Color of 'o'
+                                              ),
+                                              TextSpan(
+                                                text: 'o',
+                                                style: TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors
+                                                        .yellow), // Color of 'o'
+                                              ),
+                                              TextSpan(
+                                                  text: 'g',
+                                                  style: TextStyle(
+                                                      fontSize: 17,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors
+                                                          .blue) // Color of 'g'
+                                                  ),
+                                              TextSpan(
+                                                text: 'l',
+                                                style: TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors
+                                                        .green), // Color of 'l'
+                                              ),
+                                              TextSpan(
+                                                text: 'e',
+                                                style: TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors
+                                                        .red), // Color of 'e'
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -399,6 +381,26 @@ class _MyHomePageState extends State<LoginPage> {
     );
   }
 
+void faceBookFunc(){
+ 
+  Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => HomeScreen()));
+  CustomToast.showToast(message: "Details Found");
+                            
+}
+
+void googelFunc(){
+    CustomToast.showToast(message: 'Gest Login');
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => const Home(
+                    title: 'Homepage',
+                  )));
+}
+// ignore: non_constant_identifier_names
+void LogiFunc(){
+    if (_globalKey.currentState!.validate()) {
+       login(TextEmail.text.toString(), TextPassword.text.toString());}                     
+}
   Future<void> login(String email, String password) async {
     try {
       Map<String, String> headers = {
