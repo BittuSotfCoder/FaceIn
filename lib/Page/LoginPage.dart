@@ -22,12 +22,32 @@ class LoginPage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<LoginPage> {
+  final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
+
   var TextEmail = TextEditingController();
   var TextPassword = TextEditingController();
   var HidePass = true;
   bool _obscureText = true;
-  final Icon _visibilityIconOn = const Icon(Icons.visibility);
-  final Icon _visibilityIconOff = const Icon(Icons.visibility_off);
+  final Icon _visibilityIconOn = const Icon(
+    Icons.visibility,
+    color: Colors.black,
+  );
+  final Icon _visibilityIconOff = const Icon(
+    Icons.visibility_off,
+    color: Colors.black,
+  );
+
+  String? _Validatioemail(value) {
+    if (value!.isEmpty) {
+      return "Email Required";
+    }
+    RegExp emailRegExp = RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    if (!emailRegExp.hasMatch(value)) {
+      return "Please Enter Valid Email";
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,315 +55,342 @@ class _MyHomePageState extends State<LoginPage> {
       body: Container(
         decoration: const BoxDecoration(
             gradient: LinearGradient(
-          colors: [Color(0xffa8edea), Color(0xfffed6e3)],
+          colors: [Color.fromARGB(255, 184, 197, 196), Color(0xfffed6e3)],
         )),
         child: Center(
           child: SizedBox(
             width: 350,
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Login',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 51,
-                        fontFamily: 'RobotSlab',
-                        color: Color(0xff3d1635)),
-                  ),
-                  const SizedBox(height: 20),
-                  TextField(
-                    controller: TextEmail,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      labelText: 'Email Id',
-                      labelStyle: const TextStyle(color: Colors.black),
-                      prefixIcon:
-                          const Icon(Icons.email_sharp, color: Colors.black),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(21.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.deepPurple),
-                        borderRadius: BorderRadius.circular(21.0),
-                      ),
+              child: Form(
+                key: _globalKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Login',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 51,
+                          fontFamily: 'RobotSlab',
+                          color: Color(0xff3d1635)),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  TextField(
-                    controller: TextPassword,
-                    keyboardType: TextInputType.visiblePassword,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: const TextStyle(color: Colors.black),
-                      prefixIcon: const Icon(Icons.lock, color: Colors.black),
-                      suffixIcon: IconButton(
-                        icon: _obscureText
-                            ? _visibilityIconOn
-                            : _visibilityIconOff,
-                        onPressed: () {
-                          setState(() {
-                            _obscureText = !_obscureText;
-                          });
-                        },
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(21.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.deepPurple),
-                        borderRadius: BorderRadius.circular(21.0),
-                      ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator:_Validatioemail,
+                      controller: TextEmail,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                          labelText: 'Email Id',
+                          labelStyle: const TextStyle(color: Colors.black),
+                          prefixIcon:
+                              const Icon(Icons.email, color: Colors.black),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(21.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            
+                            borderSide:
+                                const BorderSide(color: Colors.deepPurple),
+                            borderRadius: BorderRadius.circular(21.0),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.deepPurple),
+                            borderRadius: BorderRadius.circular(20),
+                          )),
                     ),
-                    obscureText: _obscureText,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const ForgotPage(
-                                    title: 'ForgotPage',
-                                  )));
-                        },
-                        child: const Text(
-                          'Forgot Password?',
-                          style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              decorationColor:
-                                  Colors.black, // Optional: Set underline color
-                              decorationThickness: 1,
-                              fontFamily: 'RobotSlab',
-                              fontWeight: FontWeight.w600
-                              // Optional: Set underline thickness
-                              ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    child: RoundButton(
-                      btnName: 'LogIn',
-                      callback: () {
-                        if (TextEmail.text.isEmpty &&
-                            TextPassword.text.isEmpty) {
-                          CustomToast.showToast(message: 'Email,pass empty');
-                        } else if (TextEmail.text.isEmpty) {
-                          CustomToast.showToast(message:'Email empty');
-                        } else if (TextPassword.text.isEmpty) {
-                          CustomToast.showToast(message: 'pass empty');
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Password Required";
                         } else {
-                          login(TextEmail.text.toString(),
-                              TextPassword.text.toString());
+                          return null;
                         }
                       },
-                      textStyle: const TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                      controller: TextPassword,
+                      keyboardType: TextInputType.visiblePassword,
+                      decoration: InputDecoration(
+                          labelText: 'Password',
+                          labelStyle: const TextStyle(color: Colors.black),
+                          prefixIcon:
+                              const Icon(Icons.lock, color: Colors.black),
+                          suffixIcon: IconButton(
+                            icon: _obscureText
+                                ? _visibilityIconOn
+                                : _visibilityIconOff,
+                            onPressed: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(21.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Colors.deepPurple),
+                            borderRadius: BorderRadius.circular(21.0),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          )),
+                      obscureText: _obscureText,
+                      obscuringCharacter: '*',
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  SizedBox(
-                    width: double.infinity,
-                    // color: Colors.red,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Container(
-                          width: 150,
-                          height: 2,
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [Color(0xffd4fc79), Color(0xff96e6a1)],
-                            ),
-                            borderRadius: BorderRadius.circular(
-                                40.0), // Adjust the value to change the circle size
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                                40.0), // Adjust the value to change the circle size
-                            border: Border.all(
-                              width: 1.0,
-                              color: const Color(
-                                  0xffd4fc79), // Adjust the color of the border as needed
-                            ),
-                          ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const ForgotPage(
+                                      title: 'ForgotPage',
+                                    )));
+                          },
                           child: const Text(
-                            'OR',
+                            'Forgot Password?',
                             style: TextStyle(
-                                fontSize: 10.0,
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors
+                                    .black, // Optional: Set underline color
+                                decorationThickness: 1,
                                 fontFamily: 'RobotSlab',
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff330867)),
-                          ),
-                        ),
-                        Container(
-                          width: 150,
-                          height: 2,
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [Color(0xffd4fc79), Color(0xff96e6a1)],
-                            ),
-                            borderRadius: BorderRadius.circular(
-                                40.0), // Adjust the value to change the circle size
+                                fontWeight: FontWeight.w600
+                                // Optional: Set underline thickness
+                                ),
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        logobtn(
-                          btnName: 'Facebook',
-                          callback: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => HomeScreen()));
-                            CustomToast.showToast(message: "Details Found");
-                            
-                          },
-                          bgColor: const Color.fromRGBO(24, 119, 242, 1),
-                          icon: const Icon(
-                            Icons.facebook,
-                            color: Colors.white,
-                          ),
-                          textStyle: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            width: 160,
-                            height: 40,
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      child: RoundButton(
+                        btnName: 'LogIn',
+                        callback: () {
+                          // if (TextEmail.text.isEmpty &&
+                          //     TextPassword.text.isEmpty) {
+                          //   CustomToast.showToast(message: 'Email,pass empty');
+                          // } else if (TextEmail.text.isEmpty) {
+                          //   CustomToast.showToast(message:'Email empty');
+                          // } else if (TextPassword.text.isEmpty) {
+                          //   CustomToast.showToast(message: 'pass empty');
+                          // } else {
+
+                          // }
+
+                          if (_globalKey.currentState!.validate()) {
+                            login(TextEmail.text.toString(),
+                                TextPassword.text.toString());
+                          }
+                        },
+                        textStyle: const TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      width: double.infinity,
+                      // color: Colors.red,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 150,
+                            height: 2,
                             decoration: BoxDecoration(
-                              color: const Color(0xffebefee),
-                              borderRadius: BorderRadius.circular(15.0),
+                              gradient: const LinearGradient(
+                                colors: [Color(0xffd4fc79), Color(0xff96e6a1)],
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                  40.0), // Adjust the value to change the circle size
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(10.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                  40.0), // Adjust the value to change the circle size
                               border: Border.all(
                                 width: 1.0,
-                                color: Colors
-                                    .black, // Adjust the color of the border as needed
+                                color: const Color(
+                                    0xffd4fc79), // Adjust the color of the border as needed
                               ),
-                              // Adjust the value to change the circle size
                             ),
-                            child: Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'lib/assets/images/gogle.png',
-                                    width: 20,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: RichText(
-                                      text: const TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: 'G',
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors
-                                                    .blue), // Color of 'G'
-                                          ),
-                                          TextSpan(
-                                            text: 'o',
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold,
-                                                color:
-                                                    Colors.red), // Color of 'o'
-                                          ),
-                                          TextSpan(
-                                            text: 'o',
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors
-                                                    .yellow), // Color of 'o'
-                                          ),
-                                          TextSpan(
-                                              text: 'g',
+                            child: const Text(
+                              'OR',
+                              style: TextStyle(
+                                  fontSize: 10.0,
+                                  fontFamily: 'RobotSlab',
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff330867)),
+                            ),
+                          ),
+                          Container(
+                            width: 150,
+                            height: 2,
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                colors: [Color(0xffd4fc79), Color(0xff96e6a1)],
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                  40.0), // Adjust the value to change the circle size
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          logobtn(
+                            btnName: 'Facebook',
+                            callback: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => HomeScreen()));
+                              CustomToast.showToast(message: "Details Found");
+                            },
+                            bgColor: const Color.fromRGBO(24, 119, 242, 1),
+                            icon: const Icon(
+                              Icons.facebook,
+                              color: Colors.white,
+                            ),
+                            textStyle: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 160,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: const Color(0xffebefee),
+                                borderRadius: BorderRadius.circular(15.0),
+                                border: Border.all(
+                                  width: 1.0,
+                                  color: Colors
+                                      .black, // Adjust the color of the border as needed
+                                ),
+                                // Adjust the value to change the circle size
+                              ),
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'lib/assets/images/gogle.png',
+                                      width: 20,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: RichText(
+                                        text: const TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: 'G',
                                               style: TextStyle(
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors
-                                                      .blue) // Color of 'g'
-                                              ),
-                                          TextSpan(
-                                            text: 'l',
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors
-                                                    .green), // Color of 'l'
-                                          ),
-                                          TextSpan(
-                                            text: 'e',
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold,
-                                                color:
-                                                    Colors.red), // Color of 'e'
-                                          ),
-                                        ],
+                                                      .blue), // Color of 'G'
+                                            ),
+                                            TextSpan(
+                                              text: 'o',
+                                              style: TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors
+                                                      .red), // Color of 'o'
+                                            ),
+                                            TextSpan(
+                                              text: 'o',
+                                              style: TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors
+                                                      .yellow), // Color of 'o'
+                                            ),
+                                            TextSpan(
+                                                text: 'g',
+                                                style: TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors
+                                                        .blue) // Color of 'g'
+                                                ),
+                                            TextSpan(
+                                              text: 'l',
+                                              style: TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors
+                                                      .green), // Color of 'l'
+                                            ),
+                                            TextSpan(
+                                              text: 'e',
+                                              style: TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors
+                                                      .red), // Color of 'e'
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Don\'t Have An Account',
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w300,
+                              fontFamily: 'RobotSlab'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushReplacement(MaterialPageRoute(
+                                    builder: (context) => const SignUpPage(
+                                          title: 'SignUpPage',
+                                        )));
+                          },
+                          child: const Text(
+                            'SingnUp',
+                            style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors
+                                    .black, // Optional: Set underline color
+                                decorationThickness: 1,
+                                fontFamily: 'RobotSlab',
+                                fontWeight: FontWeight.w600
+                                // Optional: Set underline thickness
+                                ),
+                          ),
                         ),
                       ],
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Don\'t Have An Account',
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w300,
-                            fontFamily: 'RobotSlab'),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(
-                              builder: (context) => const SignUpPage(
-                                    title: 'SignUpPage',
-                                  )));
-                        },
-                        child: const Text(
-                          'SingnUp',
-                          style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              decorationColor:
-                                  Colors.black, // Optional: Set underline color
-                              decorationThickness: 1,
-                              fontFamily: 'RobotSlab',
-                              fontWeight: FontWeight.w600
-                              // Optional: Set underline thickness
-                              ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -376,10 +423,11 @@ class _MyHomePageState extends State<LoginPage> {
                     title: 'Homepage',
                   )));
         } else {
-          CustomToast.showToast(message:responseData['message']);
+          CustomToast.showToast(message: responseData['message']);
         }
       } else {
-        CustomToast.showToast(message: 'Failed to login. Error: ${response.statusCode}');
+        CustomToast.showToast(
+            message: 'Failed to login. Error: ${response.statusCode}');
       }
     } catch (e) {
       CustomToast.showToast(message: e.toString());
