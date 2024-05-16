@@ -77,7 +77,7 @@ class _MyHomePageState extends State<LoginPage> {
                     const SizedBox(height: 20),
                     TextFormField(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator:_Validatioemail,
+                      validator: _Validatioemail,
                       controller: TextEmail,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
@@ -89,13 +89,13 @@ class _MyHomePageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(21.0),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            
                             borderSide:
                                 const BorderSide(color: Colors.deepPurple),
                             borderRadius: BorderRadius.circular(21.0),
                           ),
                           border: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.deepPurple),
+                            borderSide:
+                                const BorderSide(color: Colors.deepPurple),
                             borderRadius: BorderRadius.circular(20),
                           )),
                     ),
@@ -412,22 +412,20 @@ class _MyHomePageState extends State<LoginPage> {
         body: jsonEncode(data),
       );
       // ignore: avoid_print
-      if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
+      if (response.statusCode == 200) {
         // ignore: avoid_print
         if (responseData['error']) {
-          // ignore: avoid_print
-          // print(responseData['message']);
+          CustomToast.showToast(message: responseData['message']);
           Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => const Home(
                     title: 'Homepage',
                   )));
         } else {
-          CustomToast.showToast(message: responseData['message']);
+        CustomToast.showToast(message: 'Email or Password incoreect');
         }
       } else {
-        CustomToast.showToast(
-            message: 'Failed to login. Error: ${response.statusCode}');
+          CustomToast.showToast(message: responseData['message']);
       }
     } catch (e) {
       CustomToast.showToast(message: e.toString());
