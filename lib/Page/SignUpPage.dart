@@ -18,14 +18,33 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<SignUpPage> {
+  final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
   var TextName = TextEditingController();
   var TextEmail = TextEditingController();
   var TextPasswordShow = TextEditingController();
   var TextPasswordHide = TextEditingController();
   var HidePass = true;
   bool _obscureText = true;
-  final Icon _visibilityIconOn = const Icon(Icons.visibility);
-  final Icon _visibilityIconOff = const Icon(Icons.visibility_off);
+  final Icon _visibilityIconOn = const Icon(
+    Icons.visibility,
+    color: Colors.black,
+  );
+  final Icon _visibilityIconOff = const Icon(
+    Icons.visibility_off,
+    color: Colors.black,
+  );
+
+  String? _Validatioemail(value) {
+    if (value!.isEmpty) {
+      return "Email Required";
+    }
+    RegExp emailRegExp = RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    if (!emailRegExp.hasMatch(value)) {
+      return "Please Enter Valid Email";
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,221 +58,207 @@ class _MyHomePageState extends State<SignUpPage> {
           child: SizedBox(
             width: 350,
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'SignUp',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 51,
-                        fontFamily: 'RobotSlab',
-                        color: Color(0xff3d1635)),
-                  ),
-                  const SizedBox(height: 20),
-                  TextField(
-                    controller: TextName,
-                    keyboardType: TextInputType.name,
-                    decoration: InputDecoration(
-                      labelText: 'Full Name',
-                      labelStyle: const TextStyle(color: Colors.black),
-                      prefixIcon: const Icon(Icons.person, color: Colors.black),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(21.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.deepPurple),
-                        borderRadius: BorderRadius.circular(21.0),
-                      ),
+              child: Form(
+                key: _globalKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'SignUp',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 51,
+                          fontFamily: 'RobotSlab',
+                          color: Color(0xff3d1635)),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  TextField(
-                    controller: TextEmail,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      labelText: 'Email Id',
-                      labelStyle: const TextStyle(color: Colors.black),
-                      prefixIcon:
-                          const Icon(Icons.email_sharp, color: Colors.black),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(21.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.deepPurple),
-                        borderRadius: BorderRadius.circular(21.0),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  TextField(
-                    controller: TextPasswordShow,
-                    keyboardType: TextInputType.visiblePassword,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: const TextStyle(color: Colors.black),
-                      prefixIcon: const Icon(Icons.lock, color: Colors.black),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(21.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.deepPurple),
-                        borderRadius: BorderRadius.circular(21.0),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  TextField(
-                    controller: TextPasswordHide,
-                    keyboardType: TextInputType.visiblePassword,
-                    decoration: InputDecoration(
-                      labelText: 'Re-Enter Password',
-                      labelStyle: const TextStyle(color: Colors.black),
-                      prefixIcon: const Icon(Icons.lock, color: Colors.black),
-                      suffixIcon: IconButton(
-                        icon: _obscureText
-                            ? _visibilityIconOn
-                            : _visibilityIconOff,
-                        onPressed: () {
-                          setState(() {
-                            _obscureText = !_obscureText;
-                          });
-                        },
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(21.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.deepPurple),
-                        borderRadius: BorderRadius.circular(21.0),
-                      ),
-                    ),
-                    obscureText: _obscureText,
-                  ),
-                  const SizedBox(height: 20),
-                  SizedBox(
-                    child: RoundButton(
-                      btnName: 'SignUp',
-                      callback: () {
-                        if (TextName.text.isEmpty &&
-                            TextEmail.text.isEmpty &&
-                            TextPasswordHide.text.isEmpty &&
-                            TextPasswordShow.text.isEmpty) {
-                          CustomToast.showToast(
-                              message:
-                                  'Required \'Name,email,password,Re-Enter password\'');
-                        } else if (TextName.text.isEmpty &&
-                            TextEmail.text.isEmpty &&
-                            TextPasswordHide.text.isEmpty) {
-                          CustomToast.showToast(
-                              message:
-                                  'Required \'Name,email,Re-Enter password\'');
-                        } else if (TextName.text.isEmpty &&
-                            TextEmail.text.isEmpty &&
-                            TextPasswordShow.text.isEmpty) {
-                          CustomToast.showToast(
-                              message: 'Required \'Name,email,password\'');
-                        } else if (TextName.text.isEmpty &&
-                            TextEmail.text.isEmpty) {
-                          CustomToast.showToast(
-                              message: 'Required \'Name,email\'');
-                        } else if (TextName.text.isEmpty &&
-                            TextPasswordHide.text.isEmpty &&
-                            TextPasswordShow.text.isEmpty) {
-                          print("name,hide,show");
-                          CustomToast.showToast(
-                              message:
-                                  'Required \'Name,password,Re-Enter password\'');
-                        } else if (TextName.text.isEmpty &&
-                            TextPasswordHide.text.isEmpty) {
-                          print("name,hide");
-                          CustomToast.showToast(
-                              message: 'Required \'Name,Re-Enter password\'');
-                        } else if (TextName.text.isEmpty &&
-                            TextPasswordShow.text.isEmpty) {
-                          CustomToast.showToast(
-                              message: 'Required \'Name,password\'');
-                        } else if (TextName.text.isEmpty) {
-                          CustomToast.showToast(message: 'Required \'Name\'');
-                        } else if (TextEmail.text.isEmpty &&
-                            TextPasswordHide.text.isEmpty &&
-                            TextPasswordShow.text.isEmpty) {
-                          CustomToast.showToast(
-                              message:
-                                  'Required \'email,password,Re-Enter password\'');
-                        } else if (TextEmail.text.isEmpty &&
-                            TextPasswordHide.text.isEmpty) {
-                          CustomToast.showToast(
-                              message: 'Required \'email,Re-Enter password\'');
-                        } else if (TextEmail.text.isEmpty &&
-                            TextPasswordShow.text.isEmpty) {
-                          CustomToast.showToast(
-                              message: 'Required \'email,password\'');
-                        } else if (TextEmail.text.isEmpty) {
-                          CustomToast.showToast(message: 'Required \'email\'');
-                        } else if (TextPasswordHide.text.isEmpty &&
-                            TextPasswordShow.text.isEmpty) {
-                          ;
-                          CustomToast.showToast(
-                              message:
-                                  'Required \'password,Re-Enter password\'');
-                        } else if (TextPasswordHide.text.isEmpty) {
-                          CustomToast.showToast(
-                              message: 'Required \'Re-Enter password\'');
-                        } else if (TextPasswordShow.text.isEmpty) {
-                          CustomToast.showToast(
-                              message: 'Required \'password\'');
-                          print("show");
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Name Required";
                         } else {
-                          if (TextPasswordShow.text.toString() ==
-                              TextPasswordHide.text.toString()) {
-                            insertData();
-                          } else {
-                            CustomToast.showToast(
-                                message: 'Password Not Match');
-                          }
+                          return null;
                         }
                       },
-                      textStyle: const TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Don\'t Have An Account',
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w300,
-                            fontFamily: 'RobotSlab'),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(
-                              builder: (context) => const LoginPage(
-                                    title: 'LoginPages',
-                                  )));
-                        },
-                        child: const Text(
-                          'Login',
-                          style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              decorationColor:
-                                  Colors.black, // Optional: Set underline color
-                              decorationThickness: 1,
-                              fontFamily: 'RobotSlab',
-                              fontWeight: FontWeight.w600
-                              // Optional: Set underline thickness
-                              ),
+                      controller: TextName,
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        labelText: 'Full Name',
+                        labelStyle: const TextStyle(color: Colors.black),
+                        prefixIcon:
+                            const Icon(Icons.person, color: Colors.black),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(21.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(21.0),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(21.0),
                         ),
                       ),
-                    ],
-                  )
-                ],
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: _Validatioemail,
+                      controller: TextEmail,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        labelText: 'Email Id',
+                        labelStyle: const TextStyle(color: Colors.black),
+                        prefixIcon:
+                            const Icon(Icons.email_sharp, color: Colors.black),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(21.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(21.0),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(21.0),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Name Required";
+                        } else {
+                          return null;
+                        }
+                      },
+                      controller: TextPasswordShow,
+                      keyboardType: TextInputType.visiblePassword,
+                      decoration: InputDecoration(
+                        labelText: 'Password Required',
+                        labelStyle: const TextStyle(color: Colors.black),
+                        prefixIcon: const Icon(Icons.lock, color: Colors.black),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(21.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(21.0),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(21.0),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Re-Enter Password Required";
+                        } else {
+                          return null;
+                        }
+                      },
+                      controller: TextPasswordHide,
+                      keyboardType: TextInputType.visiblePassword,
+                      decoration: InputDecoration(
+                        labelText: 'Re-Enter Password',
+                        labelStyle: const TextStyle(color: Colors.black),
+                        prefixIcon: const Icon(Icons.lock, color: Colors.black),
+                        suffixIcon: IconButton(
+                          icon: _obscureText
+                              ? _visibilityIconOn
+                              : _visibilityIconOff,
+                          onPressed: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(21.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(21.0),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(21.0),
+                        ),
+                      ),
+                      obscureText: _obscureText,
+                    ),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      child: RoundButton(
+                        btnName: 'SignUp',
+                        callback: () {
+                          if (_globalKey.currentState!.validate()) {
+                            if (TextPasswordShow.text.toString() ==
+                                TextPasswordHide.text.toString()) {
+                              insertData();
+                            } else {
+                              CustomToast.showToast(
+                                  message: 'Password Not Match');
+                            }
+                          }
+                        },
+                        textStyle: const TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Don\'t Have An Account',
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w300,
+                              fontFamily: 'RobotSlab'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushReplacement(MaterialPageRoute(
+                                    builder: (context) => const LoginPage(
+                                          title: 'LoginPages',
+                                        )));
+                          },
+                          child: const Text(
+                            'Login',
+                            style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors
+                                    .black, // Optional: Set underline color
+                                decorationThickness: 1,
+                                fontFamily: 'RobotSlab',
+                                fontWeight: FontWeight.w600
+                                // Optional: Set underline thickness
+                                ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -286,15 +291,15 @@ class _MyHomePageState extends State<SignUpPage> {
       final Map<String, dynamic> responseData = json.decode(response.body);
       if (response.statusCode == 200) {
         CustomToast.showToast(message: responseData['message']);
-        if(responseData['status']){
-           Navigator.of(context).pushReplacement(MaterialPageRoute(
+        if (responseData['status']) {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => const Home(
                     title: 'Homepage',
                   )));
-        TextName.clear();
-        TextEmail.clear();
-        TextPasswordHide.clear();
-        TextPasswordShow.clear();
+          TextName.clear();
+          TextEmail.clear();
+          TextPasswordHide.clear();
+          TextPasswordShow.clear();
         }
       } else {
         CustomToast.showToast(

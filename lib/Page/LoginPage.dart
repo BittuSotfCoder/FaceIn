@@ -411,10 +411,8 @@ class _MyHomePageState extends State<LoginPage> {
         headers: headers,
         body: jsonEncode(data),
       );
-      // ignore: avoid_print
         final Map<String, dynamic> responseData = json.decode(response.body);
       if (response.statusCode == 200) {
-        // ignore: avoid_print
         if (responseData['error']) {
           CustomToast.showToast(message: responseData['message']);
           Navigator.of(context).pushReplacement(MaterialPageRoute(
