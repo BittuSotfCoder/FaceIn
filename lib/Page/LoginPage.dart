@@ -388,7 +388,6 @@ void faceBookFunc(){
   CustomToast.showToast(message: "Details Found");
                             
 }
-
 void googelFunc(){
     CustomToast.showToast(message: 'Gest Login');
           Navigator.of(context).pushReplacement(MaterialPageRoute(
