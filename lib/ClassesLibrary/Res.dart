@@ -4,7 +4,7 @@ class Res {
     String link = "http://192.168.1.40/API/jsonDataInsert.php?action=$action";
     return link;
   }
-    String setString(String action) {;
+    String setString(String action) {
     return action;
   }
 }
