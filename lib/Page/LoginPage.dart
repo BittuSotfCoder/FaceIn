@@ -55,7 +55,7 @@ class _MyHomePageState extends State<LoginPage> {
       body: Container(
         decoration: const BoxDecoration(
             gradient: LinearGradient(
-          colors: [Color.fromARGB(255, 184, 197, 196), Color(0xfffed6e3)],
+          colors: [Color(0xffa8edea), Color(0xfffed6e3)],
         )),
         child: Center(
           child: SizedBox(
