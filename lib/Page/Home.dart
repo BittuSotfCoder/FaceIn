@@ -1,9 +1,12 @@
+import 'package:facein/Page/LoginPage.dart';
+import 'package:facein/Page/splasg.dart';
 import 'package:facein/TabOnScreen/TabHome.dart';
 import 'package:facein/TabOnScreen/TabNotification.dart';
 import 'package:facein/TabOnScreen/TabOption.dart';
 import 'package:facein/TabOnScreen/TabProfile.dart';
 import 'package:facein/TabOnScreen/TabWatch.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../TabOnScreen/TabFriend.dart';
 class Home extends StatefulWidget {
   const Home({super.key, required this.title});
@@ -54,8 +57,14 @@ class _MyHomePageState extends State<Home> {
             },
           ),
           IconButton(
-            icon:const  Icon(Icons.message),
-            onPressed: () {
+            icon:const  Icon(Icons.logout),
+            onPressed: ()async{
+              var sharedPref = await SharedPreferences.getInstance();
+            sharedPref.setString(SplashScreenState.KEY_LOGIN,'');
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => const LoginPage(
+              title: 'LoginPage',
+            )));
               // Add your notification functionality here
             },
           ),

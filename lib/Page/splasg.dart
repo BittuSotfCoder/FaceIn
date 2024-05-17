@@ -20,32 +20,35 @@ class SplashScreenState extends State<SplashScreen> {
 
   _navigateToHome() async {
     var sharedPref = await SharedPreferences.getInstance();
-    var isLoggedIn = sharedPref.getBool(KEY_LOGIN);
-    Timer(Duration(seconds: 3),(){
-        if(isLoggedIn!=null){
-          if(isLoggedIn){
-              Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-          builder: (context) => const Home(
-                title: 'Home',)),);
-          }else{
-              Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-          builder: (context) => const LoginPage(
-                title: 'Login',
-              )),
-    );
-          }
-        }else{
-            Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-          builder: (context) => const LoginPage(
-                title: 'Login',
-              )),
-    );}
+    var isLoggedIn = sharedPref.getString(KEY_LOGIN);
+    Timer(Duration(seconds: 3), () {
+      if (isLoggedIn!=null) {
+        if (isLoggedIn.isEmpty) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const LoginPage(
+                      title: 'Home',
+                    )),
+          );
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const Home(
+                      title: 'Login',
+                    )),
+          );
+        }
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const LoginPage(
+                    title: 'Login',
+                  )),
+        );
+      }
     });
   }
 
