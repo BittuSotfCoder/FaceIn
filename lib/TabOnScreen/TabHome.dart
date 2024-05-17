@@ -1,9 +1,6 @@
 import 'dart:convert';
 
 import 'package:facein/ClassesLibrary/Res.dart';
-import 'package:facein/Model/ModelDetails.dart';
-import 'package:facein/Model/ModelUsers.dart';
-import 'package:facein/Page/LoginPage.dart';
 import 'package:facein/Page/splasg.dart';
 import 'package:facein/widgets/CustomToast.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +17,8 @@ class TabHome extends StatefulWidget {
 }
 
 class _TabHomeState extends State<TabHome> {
-  List<ModelDetails> model = [];
-
-  var _FindID;
+  String st = '';
+  var _FindID, USERDATA;
   int dt = 3;
   var arrName = [
     'Rajababu',
@@ -67,7 +63,9 @@ class _TabHomeState extends State<TabHome> {
     var sharedPref = await SharedPreferences.getInstance();
     _FindID = sharedPref.getString(SplashScreenState.KEY_LOGIN);
     GetData();
-    setState(() {});
+  
+    setState(() {
+    });
   }
 
   @override
@@ -90,7 +88,7 @@ class _TabHomeState extends State<TabHome> {
         child: Column(
           children: [
             whatMind(
-              IdName: '$_FindID',
+              IdName: st,
               IconImg: PostImg[0],
             ),
             Padding(
@@ -151,8 +149,7 @@ class _TabHomeState extends State<TabHome> {
         'api-key': 'ndeweidjwekdiwwednddw'
       };
       final Map<String, dynamic> data = {
-        "userid": "5773130404",
-        "email": "nkksq"
+        "userid": "$_FindID"
       };
       final http.Response response = await http.post(
         Uri.parse(Res().getString('get-user-details')),
@@ -161,19 +158,9 @@ class _TabHomeState extends State<TabHome> {
       );
       final Map<String, dynamic> responseData = json.decode(response.body);
 
-      for (Map<String, dynamic> index in responseData['data']) {
-        model.add(ModelDetails.fromJson(index));
-      }
-      CustomToast.showToast(message: model[0].email);
-
-      // ignore: avoid_print
-      print(response.statusCode);
-      // ignore: avoid_print
-      print(responseData['data']);
-      if (response.statusCode == 200) {
-      } else {
-        CustomToast.showToast(message: responseData['message']);
-      }
+      USERDATA = responseData['data'];
+      st = USERDATA['name'];
+      setState(() {});
     } catch (e) {
       // CustomToast.showToast(message: "User not found");
     }
