@@ -63,9 +63,6 @@ class _TabHomeState extends State<TabHome> {
     var sharedPref = await SharedPreferences.getInstance();
     _FindID = sharedPref.getString(SplashScreenState.KEY_LOGIN);
     GetData();
-  
-    setState(() {
-    });
   }
 
   @override
@@ -148,9 +145,7 @@ class _TabHomeState extends State<TabHome> {
         'Content-Type': 'application/json',
         'api-key': 'ndeweidjwekdiwwednddw'
       };
-      final Map<String, dynamic> data = {
-        "userid": "$_FindID"
-      };
+      final Map<String, dynamic> data = {"userid": "$_FindID"};
       final http.Response response = await http.post(
         Uri.parse(Res().getString('get-user-details')),
         headers: headers,
