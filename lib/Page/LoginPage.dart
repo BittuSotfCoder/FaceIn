@@ -15,6 +15,8 @@ import 'SignUpPage.dart';
 import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
+  static var mode;
+
   const LoginPage({super.key, required this.title});
 
   final String title;
@@ -427,9 +429,8 @@ class _MyHomePageState extends State<LoginPage> {
       if (response.statusCode == 200) {
         if (password == mode[0].password) {
           if (password == mode[0].password && email == mode[0].email) {
-            // CustomToast.showToast(message: responseData['message']);
             var sharedPref = await SharedPreferences.getInstance();
-            sharedPref.setString(SplashScreenState.KEY_LOGIN,mode[0].userid);
+            sharedPref.setString(SplashScreenState.KEY_LOGIN,mode[0].name);
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => Home(title: 'Home')));
           }
@@ -440,7 +441,7 @@ class _MyHomePageState extends State<LoginPage> {
         CustomToast.showToast(message: responseData['message']);
       }
     } catch (e) {
-      // CustomToast.showToast(message: "EMail not Register");
+      CustomToast.showToast(message: "EMail not Register");
     }
   }
 }

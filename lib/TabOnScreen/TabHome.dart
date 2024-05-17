@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:facein/ClassesLibrary/Res.dart';
 import 'package:facein/Model/ModelDetails.dart';
+import 'package:facein/Model/ModelUsers.dart';
+import 'package:facein/Page/LoginPage.dart';
 import 'package:facein/Page/splasg.dart';
 import 'package:facein/widgets/CustomToast.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,7 @@ class TabHome extends StatefulWidget {
 
 class _TabHomeState extends State<TabHome> {
   List<ModelDetails> model = [];
+
   var _FindID;
   int dt = 3;
   var arrName = [
@@ -63,8 +66,8 @@ class _TabHomeState extends State<TabHome> {
   void func() async {
     var sharedPref = await SharedPreferences.getInstance();
     _FindID = sharedPref.getString(SplashScreenState.KEY_LOGIN);
-    CustomToast.showToast(message: '$_FindID');
     GetData();
+    setState(() {});
   }
 
   @override
@@ -79,7 +82,7 @@ class _TabHomeState extends State<TabHome> {
     return Container(
       height: double.infinity,
       width: double.infinity,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           gradient: LinearGradient(
         colors: [Color(0xffa8edea), Color(0xfffed6e3)],
       )),
@@ -87,7 +90,7 @@ class _TabHomeState extends State<TabHome> {
         child: Column(
           children: [
             whatMind(
-              IdName: arrName[0],
+              IdName: '$_FindID',
               IconImg: PostImg[0],
             ),
             Padding(
@@ -147,16 +150,22 @@ class _TabHomeState extends State<TabHome> {
         'Content-Type': 'application/json',
         'api-key': 'ndeweidjwekdiwwednddw'
       };
-      final Map<String, dynamic> data = {"userid": "5773130404"};
+      final Map<String, dynamic> data = {
+        "userid": "5773130404",
+        "email": "nkksq"
+      };
       final http.Response response = await http.post(
         Uri.parse(Res().getString('get-user-details')),
         headers: headers,
         body: jsonEncode(data),
       );
       final Map<String, dynamic> responseData = json.decode(response.body);
+
       for (Map<String, dynamic> index in responseData['data']) {
         model.add(ModelDetails.fromJson(index));
       }
+      CustomToast.showToast(message: model[0].email);
+
       // ignore: avoid_print
       print(response.statusCode);
       // ignore: avoid_print
@@ -166,7 +175,7 @@ class _TabHomeState extends State<TabHome> {
         CustomToast.showToast(message: responseData['message']);
       }
     } catch (e) {
-      CustomToast.showToast(message: "EMail not Register");
+      // CustomToast.showToast(message: "User not found");
     }
   }
 }
