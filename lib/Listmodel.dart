@@ -30,35 +30,35 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Container(
                     color: Colors.cyanAccent,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [Text(
-                        'signuptime: ${mode[index].signuptime}',
-                        maxLines: 1,
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      Text(
-                        'Name: ${mode[index].name}',
-                        maxLines: 1,
-                        style: TextStyle(fontSize: 20),
-                      ),
-                       Text(
-                        'email: ${mode[index].email}',
-                        maxLines: 1,
-                        style: TextStyle(fontSize: 20),
-                      ),
-                       Text(
-                        'userid: ${mode[index].userid}',
-                        maxLines: 1,
-                        style: TextStyle(fontSize: 20),
-                      ),
-                       Text(
-                        'password: ${mode[index].password}',
-                        maxLines: 1,
-                        style: TextStyle(fontSize: 20),
-                      ),
-                       
-                    ]),
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'signuptime: ${mode[index].signuptime}',
+                            maxLines: 1,
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            'Name: ${mode[index].name}',
+                            maxLines: 1,
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            'email: ${mode[index].email}',
+                            maxLines: 1,
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            'userid: ${mode[index].userid}',
+                            maxLines: 1,
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            'password: ${mode[index].password}',
+                            maxLines: 1,
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ]),
                   ),
                 );
               });
@@ -79,9 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
     };
     var response = await http.get(Uri.parse(Res().getString("get-users")),
         headers: headers);
-    Map<String, dynamic> responseData = json.decode(response.body);
+    // Map<String, dynamic> responseData = json.decode(response.body);
     if (response.statusCode == 200) {
-      for (Map<String, dynamic> index in responseData['data']) {
+      for (Map<String, dynamic> index in json.decode(response.body)) {
         mode.add(ModelUsers.fromJson(index));
       }
       return mode;
