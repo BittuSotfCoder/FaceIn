@@ -429,7 +429,7 @@ class _MyHomePageState extends State<LoginPage> {
         if (password == mode[0].password) {
           if (password == mode[0].password && email == mode[0].email) {
             var sharedPref = await SharedPreferences.getInstance();
-            sharedPref.setString(SplashScreenState.KEY_LOGIN,mode[0].userid);
+            sharedPref.setString(SplashScreenState.KEY_LOGIN, mode[0].userid);
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => Home(title: 'Home')));
           }
