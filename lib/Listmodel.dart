@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'Content-Type': 'application/json',
       'api-key': 'ndeweidjwekdiwwednddw'
     };
-    var response = await http.get(Uri.parse(Res().getString('get-users')),
+    var response = await http.get(Uri.parse('https://nodejsapidata.onrender.com/api/v1/posts'),
         headers: headers);
     Map<String, dynamic> responseData = json.decode(response.body);
     if (response.statusCode == 200) {
