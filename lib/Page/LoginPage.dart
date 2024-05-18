@@ -415,10 +415,10 @@ class _MyHomePageState extends State<LoginPage> {
         'api-key': 'ndeweidjwekdiwwednddw'
       };
       final Map<String, dynamic> data = {"email": email, "password": password};
-      final http.Response response = await http.post(
+      final http.Response response = await http.get(
         Uri.parse(Res().getString('login-user')),
         headers: headers,
-        body: jsonEncode(data),
+        // body: jsonEncode(data),
       );
       final Map<String, dynamic> responseData = json.decode(response.body);
       for (Map<String, dynamic> index in responseData['data']) {
