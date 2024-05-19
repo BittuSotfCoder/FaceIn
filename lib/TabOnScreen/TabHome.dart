@@ -1,8 +1,6 @@
 import 'dart:convert';
-
-import 'package:facein/ClassesLibrary/Res.dart';
+import 'package:facein/Model/ModelUsers.dart';
 import 'package:facein/Page/splasg.dart';
-import 'package:facein/widgets/CustomToast.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,8 +15,9 @@ class TabHome extends StatefulWidget {
 }
 
 class _TabHomeState extends State<TabHome> {
+  List<ModelUsers> mode = [];
   String st = '';
-  var _FindID, USERDATA;
+  var _FindID;
   int dt = 3;
   var arrName = [
     'Rajababu',
@@ -145,16 +144,19 @@ class _TabHomeState extends State<TabHome> {
         'Content-Type': 'application/json',
         'api-key': 'ndeweidjwekdiwwednddw'
       };
-      final Map<String, dynamic> data = {"userid": "$_FindID"};
-      final http.Response response = await http.post(
-        Uri.parse(Res().getString('get-user-details')),
+
+      // final Map<String, dynamic> data = {"userid": "$_FindID"};
+      final http.Response response = await http.get(
+        Uri.parse(
+            'https://facebackend-0uvr.onrender.com/api/v1/posts/$_FindID'),
         headers: headers,
-        body: jsonEncode(data),
       );
       final Map<String, dynamic> responseData = json.decode(response.body);
+      for (Map<String, dynamic> index in responseData['data']) {
+        mode.add(ModelUsers.fromJson(index));
+      }
+      st = mode[0].name;
 
-      USERDATA = responseData['data'];
-      st = USERDATA['name'];
       setState(() {});
     } catch (e) {
       // CustomToast.showToast(message: "User not found");
