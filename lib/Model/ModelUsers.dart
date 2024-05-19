@@ -12,30 +12,23 @@ class ModelUsers {
     String name;
     String email;
      String userid;
-    String password;
-    String signuptime;
+
 
     ModelUsers({
         required this.name,
         required this.email,
         required this.userid,
-        required this.password,
-        required this.signuptime
     });
 
     factory ModelUsers.fromJson(Map<String, dynamic> json) => ModelUsers(
         name: json["name"],
         email: json["email"],
         userid: json["userid"],
-        password: json["password"],
-        signuptime: json["signuptime"],
     );
 
     Map<String, dynamic> toJson() => {
         "name": name,
         "email": email,
          "userid": userid,
-        "password": password,
-        "signuptime": signuptime,
     };
 }

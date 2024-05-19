@@ -426,16 +426,16 @@ class _MyHomePageState extends State<LoginPage> {
       }
 
       if (response.statusCode == 200) {
-        if (password == mode[0].password) {
-          if (password == mode[0].password && email == mode[0].email) {
-            var sharedPref = await SharedPreferences.getInstance();
-            sharedPref.setString(SplashScreenState.KEY_LOGIN, mode[0].userid);
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => Home(title: 'Home')));
-          }
-        } else {
-          CustomToast.showToast(message: 'Wrong Password');
-        }
+        // if (password == mode[0].password) {
+        //   if (password == mode[0].password && email == mode[0].email) {
+        //     var sharedPref = await SharedPreferences.getInstance();
+        //     sharedPref.setString(SplashScreenState.KEY_LOGIN, mode[0].userid);
+        //     Navigator.of(context).pushReplacement(
+        //         MaterialPageRoute(builder: (context) => Home(title: 'Home')));
+        //   }
+        // } else {
+        //   CustomToast.showToast(message: 'Wrong Password');
+        // }
       } else {
         CustomToast.showToast(message: responseData['message']);
       }

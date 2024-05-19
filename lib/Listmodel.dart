@@ -34,11 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'signuptime: ${mode[index].signuptime}',
-                            maxLines: 1,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Text(
                             'Name: ${mode[index].name}',
                             maxLines: 1,
                             style: TextStyle(fontSize: 20),
@@ -50,11 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             'userid: ${mode[index].userid}',
-                            maxLines: 1,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            'password: ${mode[index].password}',
                             maxLines: 1,
                             style: TextStyle(fontSize: 20),
                           ),
@@ -77,7 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
       'Content-Type': 'application/json',
       'api-key': 'ndeweidjwekdiwwednddw'
     };
-    var response = await http.get(Uri.parse('https://nodejsapidata.onrender.com/api/v1/posts'),
+    var response = await http.get(
+        Uri.parse('https://facebackend-0uvr.onrender.com/api/v1/posts'),
         headers: headers);
     Map<String, dynamic> responseData = json.decode(response.body);
     if (response.statusCode == 200) {
