@@ -415,18 +415,45 @@ class _MyHomePageState extends State<LoginPage> {
         'api-key': 'ndeweidjwekdiwwednddw'
       };
       final Map<String, dynamic> data = {"email": email, "password": password};
-      final http.Response response = await http.get(
-        Uri.parse(Res().getString('login-user')),
+      final http.Response response = await http.post(
+        Uri.parse('https://facebackend-0uvr.onrender.com/api/v1/auth/login'),
         headers: headers,
-        // body: jsonEncode(data),
+        body: jsonEncode(data),
       );
+      // ignore: avoid_print
+      print(response.body);
       final Map<String, dynamic> responseData = json.decode(response.body);
-      for (Map<String, dynamic> index in responseData['data']) {
-        mode.add(ModelUsers.fromJson(index));
+      try{
+      if (responseData['statusemail']) {
+        CustomToast.showToast(message: "Email not Register");
+      }}catch(e){}
+      try{
+
+      if (responseData['statepass']) {
+         CustomToast.showToast(message: "Wrong Password");
+     
+      }}catch(e){}
+      if(responseData['statelogin']){
+                      var sharedPref = await SharedPreferences.getInstance();
+            sharedPref.setString(SplashScreenState.KEY_LOGIN,responseData['userid'] );
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) =>const Home(title: 'Home')));
+         CustomToast.showToast(message:responseData['userid']);
       }
 
+
       if (response.statusCode == 200) {
-        // if (password == mode[0].password) {
+       
+      } else {
+        CustomToast.showToast(message: responseData['message']);
+      }
+    } catch (e) {
+      // CustomToast.showToast(message: "EMail not Register");
+    }
+  }
+}
+// -----------------php control------------
+ // if (password == mode[0].password) {
         //   if (password == mode[0].password && email == mode[0].email) {
         //     var sharedPref = await SharedPreferences.getInstance();
         //     sharedPref.setString(SplashScreenState.KEY_LOGIN, mode[0].userid);
@@ -436,11 +463,3 @@ class _MyHomePageState extends State<LoginPage> {
         // } else {
         //   CustomToast.showToast(message: 'Wrong Password');
         // }
-      } else {
-        CustomToast.showToast(message: responseData['message']);
-      }
-    } catch (e) {
-      CustomToast.showToast(message: "EMail not Register");
-    }
-  }
-}
