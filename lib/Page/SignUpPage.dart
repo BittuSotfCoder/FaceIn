@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:facein/ClassesLibrary/Res.dart';
 import 'package:facein/Page/Home.dart';
+import 'package:facein/Page/splasg.dart';
 import 'package:facein/widgets/CustomToast.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/Rounded_btn.dart';
 import 'dart:math';
 import 'LoginPage.dart';
@@ -271,10 +273,10 @@ class _MyHomePageState extends State<SignUpPage> {
     final Map<String, dynamic> data = {
       // Your data to be inserted
 
-      "faceid": generateUserId(10),
       "name": TextName.text.toString(),
       "email": TextEmail.text.toString(),
-      "password": TextPasswordHide.text.toString()
+      "password": TextPasswordHide.text.toString(),
+      "userid": generateUserId(10)
     };
 
     Map<String, String> headers = {
@@ -284,14 +286,22 @@ class _MyHomePageState extends State<SignUpPage> {
 
     try {
       var response = await http.post(
-        Uri.parse(Res().getString('create-user')),
+        Uri.parse('https://facebackend-0uvr.onrender.com/api/v1/auth/register'),
         headers: headers,
         body: jsonEncode(data),
       );
       final Map<String, dynamic> responseData = json.decode(response.body);
-      if (response.statusCode == 200) {
-        CustomToast.showToast(message: responseData['message']);
-        if (responseData['status']) {
+      try {
+        if (responseData['existstate']) {
+          CustomToast.showToast(message: responseData['error']);
+        }
+      } catch (e) {}
+      try {
+        if (responseData['state']) {
+          var sharedPref = await SharedPreferences.getInstance();
+          sharedPref.setString(SplashScreenState.KEY_LOGIN, data['userid']);
+          CustomToast.showToast(message: responseData['message']);
+
           Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => const Home(
                     title: 'Homepage',
@@ -301,12 +311,26 @@ class _MyHomePageState extends State<SignUpPage> {
           TextPasswordHide.clear();
           TextPasswordShow.clear();
         }
-      } else {
-        CustomToast.showToast(
-            message: responseData['message'] + "  " + response.statusCode);
-        // ignore: avoid_print
-        // print('Failed to insert data. Error: ${response.statusCode}');
-      }
+      } catch (e) {}
+
+      // if (response.statusCode == 200) {
+      //   CustomToast.showToast(message: responseData['message']);
+      //   if (responseData['status']) {
+      //     // Navigator.of(context).pushReplacement(MaterialPageRoute(
+      //     //     builder: (context) => const Home(
+      //     //           title: 'Homepage',
+      //     //         )));
+      //     TextName.clear();
+      //     TextEmail.clear();
+      //     TextPasswordHide.clear();
+      //     TextPasswordShow.clear();
+      //   }
+      // } else {
+      //   CustomToast.showToast(
+      //       message: responseData['message'] + "  " + response.statusCode);
+      //   // ignore: avoid_print
+      //   // print('Failed to insert data. Error: ${response.statusCode}');
+      // }
     } catch (e) {
       CustomToast.showToast(message: e.toString());
     }
