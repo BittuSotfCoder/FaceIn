@@ -1,11 +1,54 @@
+import 'dart:ffi';
+
 import 'package:facein/widgets/CircularIcon.dart';
 import 'package:facein/widgets/IconTextButton.dart';
+import 'package:facein/widgets/PostPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class TabProfile extends StatelessWidget{
-  const TabProfile({super.key});
+   TabProfile({super.key});
 
+int dt = 3;
+  var arrName = [
+    'Rajababu',
+    'Raman Sah',
+    'Bittu Kumar',
+    'ramesh',
+    'suresh',
+    'byte',
+    'Pintu',
+    'Saho',
+    'Piyush',
+    'Swati Singh'
+  ];
+
+  var PostImg = [
+    'lib/assets/images/asus.jpg',
+    'lib/assets/images/bittuScotter.jpg',
+    'lib/assets/images/gogle.png',
+    'lib/assets/images/th2.jpeg',
+    'lib/assets/images/sc.jpg',
+    'lib/assets/images/th.jpeg',
+    'lib/assets/images/th1.jpeg',
+    'lib/assets/images/bittuScotter.jpg',
+    'lib/assets/images/th3.jpeg',
+    'lib/assets/images/th5.jpeg'
+  ];
+
+  var IconImg = [
+    'lib/assets/images/bittu.jpg',
+    'lib/assets/images/bittuScotter.jpg',
+    'lib/assets/images/gogle.png',
+    'lib/assets/images/sc.jpg',
+    'lib/assets/images/th.jpeg',
+    'lib/assets/images/th1.jpeg',
+    'lib/assets/images/th2.jpeg',
+    'lib/assets/images/bittuScotter.jpg',
+    'lib/assets/images/th3.jpeg',
+    'lib/assets/images/th5.jpeg',
+    'lib/assets/images/asus.jpg',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +111,8 @@ class TabProfile extends StatelessWidget{
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.only(right: 16.0,left: 16 ,top: 16),
+                  
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -126,9 +170,14 @@ class TabProfile extends StatelessWidget{
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                         const Text('Friends',
+                         Row(children: [
+                          const Text('Friends',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
+                              const Text('  147 Friends',
+                          style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.normal)),
+                         ],),
                           InkWell(
                           onTap: (){},
                           child:const Text('See all',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 17,color:Color.fromRGBO(24, 119, 242, 1) ),))
@@ -139,16 +188,19 @@ class TabProfile extends StatelessWidget{
                         height: 100,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
-                          children: List.generate(10, (index) => FriendCard()),
+                          children: List.generate(arrName.length, (index) => FriendCard(URLImg:IconImg[index],name: arrName[index],)),
                         ),
                       ),
-                      SizedBox(height: 16),
                       Divider(),
-                      // Posts Feed Section
-                      ...List.generate(10, (index) => PostCard()),
+                      
                     ],
                   ),
                 ),
+                ...List.generate(arrName.length, (index) => Postpage(
+                IdName: arrName[index],
+                IconImg: IconImg[index],
+                PostImg: PostImg[index],
+                DateOfPost: '7 Apr')),
               ],
             ),
                     ),
@@ -160,19 +212,31 @@ class TabProfile extends StatelessWidget{
 }
 
 class FriendCard extends StatelessWidget {
+
+
+  final String URLImg; 
+  final String name; 
+
+
+  FriendCard({
+    required this.URLImg, required this.name,
+  });
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 80,
       margin: EdgeInsets.all(8.0),
       child: Column(
-        children: const [
+        children:  [
           CircleAvatar(
             radius: 30,
-            backgroundImage: NetworkImage('https://allglobal.net/wp-content/uploads/2021/05/URL-e1622012392682.jpeg'),
+            // backgroundImage: NetworkImage(URLImg),
+            backgroundImage: AssetImage(URLImg),
           ),
-          SizedBox(height: 8),
-          Text('Friend jkasm ', overflow:  TextOverflow.ellipsis),
+          SizedBox(height: 4),
+          Text(name, overflow:  TextOverflow.ellipsis),
         ],
       ),
     );
