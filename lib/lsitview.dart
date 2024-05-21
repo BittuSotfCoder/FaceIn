@@ -1,65 +1,84 @@
-import 'package:facein/widgets/FriendSearch.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(FacebookHomePage());
-}
 
-class FacebookHomePage extends StatelessWidget {
+
+class FacebookSettingsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Stories Section
-           FriendsSearch(),
-              ...List.generate(10, (index) => PostCard()),
+      home: SettingsPage(),
+    );
+  }
+}
+
+class SettingsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Settings'),
+      ),
+      body: ListView(
+        children: [
+          SettingsSection(
+            title: 'Account Settings',
+            items: [
+              SettingsItem(
+                icon: Icons.person,
+                title: 'Personal Information',
+                onTap: () {},
+              ),
+              SettingsItem(
+                icon: Icons.lock,
+                title: 'Password and Security',
+                onTap: () {},
+              ),
+              SettingsItem(
+                icon: Icons.notifications,
+                title: 'Notifications',
+                onTap: () {},
+              ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class StoryCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 80,
-      margin: EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        image: DecorationImage(
-          image: NetworkImage('https://via.placeholder.com/150'),
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-  }
-}
-
-class CreatePostSection extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      color: Colors.white,
-      child: Row(
-        children: [
-          CircleAvatar(
-            backgroundImage: NetworkImage('https://via.placeholder.com/150'),
-          ),
-          SizedBox(width: 8),
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'What\'s on your mind?',
-                border: InputBorder.none,
+          SettingsSection(
+            title: 'Privacy Settings',
+            items: [
+              SettingsItem(
+                icon: Icons.privacy_tip,
+                title: 'Privacy Checkup',
+                onTap: () {},
               ),
-            ),
+              SettingsItem(
+                icon: Icons.shield,
+                title: 'Privacy Shortcuts',
+                onTap: () {},
+              ),
+              SettingsItem(
+                icon: Icons.block,
+                title: 'Blocking',
+                onTap: () {},
+              ),
+            ],
+          ),
+          SettingsSection(
+            title: 'Help & Support',
+            items: [
+              SettingsItem(
+                icon: Icons.help,
+                title: 'Help Center',
+                onTap: () {},
+              ),
+              SettingsItem(
+                icon: Icons.contact_support,
+                title: 'Support Inbox',
+                onTap: () {},
+              ),
+              SettingsItem(
+                icon: Icons.feedback,
+                title: 'Report a Problem',
+                onTap: () {},
+              ),
+            ],
           ),
         ],
       ),
@@ -67,53 +86,45 @@ class CreatePostSection extends StatelessWidget {
   }
 }
 
-class PostCard extends StatelessWidget {
+class SettingsSection extends StatelessWidget {
+  final String title;
+  final List<SettingsItem> items;
+
+  SettingsSection({required this.title, required this.items});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 8),
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ListTile(
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage('https://via.placeholder.com/150'),
-            ),
-            title: Text('User Name'),
-            subtitle: Text('5 mins ago'),
-            trailing: Icon(Icons.more_horiz),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            title,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Text('This is a sample post.'),
-          ),
-          Image.network('https://via.placeholder.com/500x250'),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: Icon(Icons.thumb_up, color: Colors.grey),
-                  label: Text('Like', style: TextStyle(color: Colors.grey)),
-                ),
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: Icon(Icons.comment, color: Colors.grey),
-                  label: Text('Comment', style: TextStyle(color: Colors.grey)),
-                ),
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: Icon(Icons.share, color: Colors.grey),
-                  label: Text('Share', style: TextStyle(color: Colors.grey)),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
+        Column(children: items),
+        Divider(),
+      ],
+    );
+  }
+}
+
+class SettingsItem extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final VoidCallback onTap;
+
+  SettingsItem({required this.icon, required this.title, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(icon, color: Colors.blue[800]),
+      title: Text(title),
+      trailing: Icon(Icons.arrow_forward_ios, size: 16.0),
+      onTap: onTap,
     );
   }
 }

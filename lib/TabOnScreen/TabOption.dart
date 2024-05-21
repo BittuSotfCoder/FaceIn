@@ -1,3 +1,5 @@
+import 'package:facein/lsitview.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class TabOption extends StatelessWidget{
@@ -13,7 +15,7 @@ class TabOption extends StatelessWidget{
           gradient: LinearGradient(
             colors: [Color(0xffa8edea), Color(0xfffed6e3)],
           )),
-
+          child: Material(child: FacebookSettingsApp()),
     );
   }
 
