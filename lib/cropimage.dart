@@ -1,48 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'dart:io';
 
-class cropinmage extends StatefulWidget {
+
+
+class CROPM extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Image Cropper Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<cropinmage> {
-  File? _imageFile;
+class _MyHomePageState extends State<MyHomePage> {
+  File? _croppedFile;
 
-  Future<void> _pickImage() async {
-    final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+  Future<void> _pickAndCropImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
     if (pickedFile != null) {
-      _cropImage(pickedFile.path);
-    }
-  }
-
-  Future<void> _cropImage(String path) async {
-    File? croppedFile = await ImageCropper.cropImage(
-      sourcePath: path,
+      final CroppedFile? croppedFile = await ImageCropper.platform.cropImage(
+      sourcePath: pickedFile.path,
+      maxWidth: null,
+      maxHeight: null,
+      aspectRatio: null,
       aspectRatioPresets: [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9
-      ],
-      androidUiSettings: AndroidUiSettings(
-        toolbarTitle: 'Crop Image',
-        toolbarColor: Colors.deepOrange,
-        toolbarWidgetColor: Colors.white,
-        initAspectRatio: CropAspectRatioPreset.original,
-        lockAspectRatio: false,
-      ),
-      iosUiSettings: IOSUiSettings(
-        minimumAspectRatio: 1.0,
-      )
+          CropAspectRatioPreset.square,
+          CropAspectRatioPreset.ratio3x2,
+          CropAspectRatioPreset.original,
+          CropAspectRatioPreset.ratio4x3,
+          CropAspectRatioPreset.ratio16x9
+        ],
+      cropStyle: CropStyle.rectangle,
+      compressFormat: ImageCompressFormat.jpg,
+      compressQuality: 90,
+      uiSettings: null,
     );
 
-    if (croppedFile != null) {
-      setState(() {
-        _imageFile = croppedFile;
-      });
+      if (croppedFile != null) {
+        setState(() {
+          _croppedFile = File(croppedFile.path);
+        });
+      }
     }
   }
 
@@ -50,17 +61,21 @@ class _MyHomePageState extends State<cropinmage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Crop Image Example'),
+        title: Text('Image Cropper Example'),
       ),
       body: Center(
-        child: _imageFile == null
-            ? Text('No image selected.')
-            : Image.file(_imageFile!),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _pickImage,
-        tooltip: 'Pick Image',
-        child: Icon(Icons.add_a_photo),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            if (_croppedFile != null)
+              Image.file(_croppedFile!),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _pickAndCropImage,
+              child: Text('Pick and Crop Image'),
+            ),
+          ],
+        ),
       ),
     );
   }
