@@ -85,11 +85,11 @@ class _TabHomeState extends State<TabHome> {
           children: [
               // Stories Section
                whatMind(
-              IdName: 'kljkas',
+              IdName: st,
               IconImg: PostImg[0],
             ),
               Container(
-                height: 150,
+                height: 180,
                 color: Colors.white,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
