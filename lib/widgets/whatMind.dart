@@ -14,7 +14,6 @@ class whatMind extends StatelessWidget{
     required this.IconImg,
   }
       );
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -35,7 +34,7 @@ class whatMind extends StatelessWidget{
                     height: 40,
                     decoration:  BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage(IconImg!),
+                          image:NetworkImage(IconImg!) ,
                           fit: BoxFit.fill),
                       color: Colors.white,
                       shape: BoxShape.circle,

@@ -17,6 +17,8 @@ class TabHome extends StatefulWidget {
 class _TabHomeState extends State<TabHome> {
   List<ModelUsers> mode = [];
   String st = '';
+  var img;
+  var imgbackground;
   var _FindID;
   int dt = 3;
   var arrName = [
@@ -71,6 +73,7 @@ class _TabHomeState extends State<TabHome> {
     func();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -83,30 +86,34 @@ class _TabHomeState extends State<TabHome> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-              // Stories Section
-               whatMind(
+            // Stories Section
+            whatMind(
               IdName: st,
-              IconImg: PostImg[0],
+              IconImg:img,
             ),
-              Container(
-                height: 180,
-                color: Colors.white,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: List.generate(10, (index) => StoryPage(
-                            IdName: arrName[index],
-                            IconImg: IconImg[index],
-                            PostImg: PostImg[index])),
-                ),
+            Container(
+              height: 180,
+              color: Colors.white,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: List.generate(
+                    10,
+                    (index) => StoryPage(
+                        IdName: arrName[index],
+                        IconImg: IconImg[index],
+                        PostImg: PostImg[index])),
               ),
-              // Create Post Section
-              // Posts Feed Section
-              ...List.generate(arrName.length, (index) => Postpage(
-                IdName: arrName[index],
-                IconImg: IconImg[index],
-                PostImg: PostImg[index],
-                DateOfPost: '7 Apr')),
-            ],
+            ),
+            // Create Post Section
+            // Posts Feed Section
+            ...List.generate(
+                arrName.length,
+                (index) => Postpage(
+                    IdName: arrName[index],
+                    IconImg: IconImg[index],
+                    PostImg: PostImg[index],
+                    DateOfPost: '7 Apr')),
+          ],
         ),
       ),
     );
@@ -130,6 +137,8 @@ class _TabHomeState extends State<TabHome> {
         mode.add(ModelUsers.fromJson(index));
       }
       st = mode[0].name;
+      img = mode[0].img;
+      imgbackground = mode[0].imgbackground;
 
       setState(() {});
     } catch (e) {

@@ -48,6 +48,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             maxLines: 1,
                             style: TextStyle(fontSize: 20),
                           ),
+                          Text(
+                            'img: ${mode[index].img}',
+                            maxLines: 1,
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            'imgbackground: ${mode[index].imgbackground}',
+                            maxLines: 1,
+                            style: TextStyle(fontSize: 20),
+                          ),
+                      
                         ]),
                   ),
                 );
