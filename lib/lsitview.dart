@@ -16,8 +16,16 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
-      ),
+        title:const Text('Settings'),
+
+          actions:  <Widget>[
+          IconButton(
+            icon:  const Icon(Icons.search),
+            onPressed: () {
+              // Add your search functionality here
+            },
+          ),]
+              ),
       body: ListView(
         children: [
           SettingsSection(
