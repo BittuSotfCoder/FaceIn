@@ -83,56 +83,30 @@ class _TabHomeState extends State<TabHome> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            whatMind(
-              IdName: st,
+              // Stories Section
+               whatMind(
+              IdName: 'kljkas',
               IconImg: PostImg[0],
             ),
-            Padding(
-                padding: const EdgeInsets.only(top: 4.0),
-                child: Container(
-                  height: 150,
-                  color: Colors.cyan,
-                  width: double.infinity,
-                  child: Material(
-                    elevation: 4.0, // Add elevation if needed
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext context, int index) {
-                        return StoryPage(
+              Container(
+                height: 150,
+                color: Colors.white,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: List.generate(10, (index) => StoryPage(
                             IdName: arrName[index],
                             IconImg: IconImg[index],
-                            PostImg: PostImg[index]);
-                      },
-                      itemCount: arrName.length,
-                    ),
-                  ),
-                )),
-            Postpage(
-                IdName: arrName[0],
-                IconImg: IconImg[0],
-                PostImg: PostImg[0],
-                DateOfPost: '7 Apr'),
-            Postpage(
-                IdName: arrName[1],
-                IconImg: IconImg[1],
-                PostImg: PostImg[1],
-                DateOfPost: '7 Mar'),
-            Postpage(
-                IdName: arrName[2],
-                IconImg: IconImg[2],
-                PostImg: PostImg[2],
-                DateOfPost: '7 Dec'),
-            Postpage(
-                IdName: arrName[3],
-                IconImg: IconImg[3],
-                PostImg: PostImg[3],
-                DateOfPost: '7 Jan'),
-            Postpage(
-                IdName: arrName[4],
-                IconImg: IconImg[4],
-                PostImg: PostImg[4],
-                DateOfPost: '7 Feb')
-          ],
+                            PostImg: PostImg[index])),
+                ),
+              ),
+              // Create Post Section
+              // Posts Feed Section
+              ...List.generate(arrName.length, (index) => Postpage(
+                IdName: arrName[index],
+                IconImg: IconImg[index],
+                PostImg: PostImg[index],
+                DateOfPost: '7 Apr')),
+            ],
         ),
       ),
     );

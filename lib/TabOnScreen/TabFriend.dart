@@ -24,23 +24,16 @@ class TabFriend extends StatelessWidget{
       Container(
         height: double.infinity,
         width: double.infinity,
-        decoration:  BoxDecoration(
+        decoration:  const BoxDecoration(
             gradient: LinearGradient(
               colors: [Color(0xffa8edea), Color(0xfffed6e3)],
             )),
         child: SingleChildScrollView(
           child: Column(
-            children: [
-              FriendsSearch(),
-              Container(
-              height: 700,
-              child:
-              ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  return  FriendsReqList(IdName: arrName[index],IconImg:IconImg[index+1],PostImg:PostImg[index], DateOfPost: '${index+1}day',) ;
-                }, itemCount: arrName.length,
-              ),
-            )
+            children:  [
+              // Stories Section
+           FriendsSearch(),
+              ...List.generate(arrName.length, (index) =>  FriendsReqList(IdName: arrName[index],IconImg:IconImg[index+1],PostImg:PostImg[index], DateOfPost: '${index+1}day',)),
             ],
           ),
         ),
