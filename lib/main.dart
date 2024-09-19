@@ -1,10 +1,13 @@
 // flutter build apk --build-name=1.0 --build-number=1 
 import 'package:facein/Page/splasg.dart';
 import 'package:facein/cropimage.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
