@@ -1,4 +1,4 @@
-package com.bittu.facein
+package bittu.facebook.india
 
 import io.flutter.embedding.android.FlutterActivity
 
