@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:facein/Page/Home.dart';
 import 'package:facein/Page/LoginPage.dart';
 import 'package:flutter/foundation.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,10 @@ class SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _checkPermissions() async {
-
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.location,
+      Permission.notification,
+    ].request();
   }
 
 

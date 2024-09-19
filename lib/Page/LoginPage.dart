@@ -6,6 +6,7 @@ import 'package:facein/Page/splasg.dart';
 import 'package:facein/widgets/CustomToast.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../services/WebView.dart';
 import '../widgets/Rounded_btn.dart';
 import '../widgets/logobtn.dart';
 import 'package:facein/Model/ModelUsers.dart';
@@ -198,24 +199,32 @@ class _MyHomePageState extends State<LoginPage> {
                                   40.0), // Adjust the value to change the circle size
                             ),
                           ),
-                          Container(
-                            padding: const EdgeInsets.all(10.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                  40.0), // Adjust the value to change the circle size
-                              border: Border.all(
-                                width: 1.0,
-                                color: const Color(
-                                    0xffd4fc79), // Adjust the color of the border as needed
+                          InkWell(
+                            onTap: (){
+                              Navigator.of(context)
+                                  .pushReplacement(MaterialPageRoute(
+                                  builder: (context) =>  WebViewScreen(
+                                  )));
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    40.0), // Adjust the value to change the circle size
+                                border: Border.all(
+                                  width: 1.0,
+                                  color: const Color(
+                                      0xffd4fc79), // Adjust the color of the border as needed
+                                ),
                               ),
-                            ),
-                            child: const Text(
-                              'OR',
-                              style: TextStyle(
-                                  fontSize: 10.0,
-                                  fontFamily: 'RobotSlab',
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff330867)),
+                              child: const Text(
+                                'OR',
+                                style: TextStyle(
+                                    fontSize: 10.0,
+                                    fontFamily: 'RobotSlab',
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xff330867)),
+                              ),
                             ),
                           ),
                           Container(

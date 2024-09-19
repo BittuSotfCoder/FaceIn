@@ -4,6 +4,7 @@ class Assets {
 
   static const String classesLibraryCreateUserid = 'lib/ClassesLibrary/CreateUserid.dart';
   static const String classesLibraryRes = 'lib/ClassesLibrary/Res.dart';
+  static const String constConfig = 'lib/Const/constant.dart';
   static const String fontBebasNeueRegular = 'lib/assets/font/BebasNeue-Regular.ttf';
   static const String fontOswaldVariableFontWght = 'lib/assets/font/Oswald-VariableFont_wght.ttf';
   static const String fontRobotoSlabVariableFontWght = 'lib/assets/font/RobotoSlab-VariableFont_wght.ttf';
@@ -38,6 +39,7 @@ class Assets {
   static const String pageSplash = 'lib/Page/Splash.dart';
   static const String pageTextPage = 'lib/Page/TextPage.dart';
   static const String servicesNotificationService = 'lib/services/NotificationService.dart';
+  static const String servicesWebView = 'lib/services/WebView.dart';
   static const String tabOnScreenTabFriend = 'lib/TabOnScreen/TabFriend.dart';
   static const String tabOnScreenTabHome = 'lib/TabOnScreen/TabHome.dart';
   static const String tabOnScreenTabNotification = 'lib/TabOnScreen/TabNotification.dart';
