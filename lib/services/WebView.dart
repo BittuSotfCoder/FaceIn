@@ -22,7 +22,6 @@ The navigation delegate is set to block navigation to the youtube website.
 </html>
 ''';
 
-
 class WebViewScreen extends StatefulWidget {
 
   @override
